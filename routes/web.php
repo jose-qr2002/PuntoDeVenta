@@ -13,6 +13,7 @@ Route::get('/rClientes', function () {
     return view('rClientes');
 });
 
+
 Route::get('/Clientes', function () {
     return view('Clientes');
 });
