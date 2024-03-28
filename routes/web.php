@@ -3,7 +3,7 @@
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () { return view('productos'); });
-
+Route::get('/registrar-producto', function () { return view('registrarProducto'); });
 
 Route::get('/rVenta', function () {
     return view('rVenta');
