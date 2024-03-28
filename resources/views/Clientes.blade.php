@@ -8,19 +8,20 @@
 
 @section('contenidoprincipal')
     <h1 class="text-center mt-5">TODOS LOS CLIENTES</h1>
-    <div class="controls d-flex justify-content-between">
-        <div class="input-group w-50">
-            <input type="text" class="form-control" placeholder="Ingrese el DNI del Cliente">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button">Buscar</button>
-            </div>
+    <div class="controls d-flex flex-column flex-md-row justify-content-between align-items-center">
+    <div class="input-group mb-3 mb-md-0 w-auto">
+        <input type="text" class="form-control" placeholder="DNI del Cliente">
+        <div class="input-group-append">
+            <button class="btn btn-outline-secondary" type="button">Buscar</button>
         </div>
-        <a href="">
-            <button class="btn btn-primary">Registrar Cliente</button>
-        </a>
     </div>
+    <a href="" class="mt-3 mt-md-0">
+        <button class="btn btn-primary">Registrar Cliente</button>
+    </a>
+</div>
+
     <div class="table-responsive mt-3">
-        <table class="table table-striped table-bordered">
+        <table class="table table-striped table-bordered text-center">
             <thead>
                 <tr>
                     <th>DNI</th>
