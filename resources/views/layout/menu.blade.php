@@ -21,9 +21,26 @@
             max-width: 255px;
             position: relative;
             overflow-y: auto; /* Añade un desplazamiento solo al contenido */
-            min-height: 100%; /* Asegúrate de que el contenido ocupe todo el espacio disponible */
+            min-height: 100vh; /* Asegúrate de que el contenido ocupe todo el espacio disponible */
+            max-height: 100vh;
             z-index: 1;
+            background-color: #0290D2;
         }
+
+        .sidebar__enlace {
+            background-color: #01688D;
+            border: none!important;
+            outline: none;
+        }
+
+        .sidebar__enlace:hover {
+            background-color: #023041;
+        }
+
+        .sidebar__titulo {
+            color: #043f55;
+        }
+
         .sidebar::-webkit-scrollbar {
             display: none;
         }
@@ -58,6 +75,14 @@
             }
 
         }
+
+        @media (max-height: 540px) {
+            .btn-volver {
+                position: static;
+                transform: translateX(0);
+            }
+        }
+
     </style>
     @yield('codigocabeceraprincipal')
 @endsection
@@ -67,34 +92,36 @@
     <div class="" style="min-height: 100%">
         <div class="separador d-flex bg-light" style="height: 100vh">
             <!-- Sidebar -->
-            <div class="sidebar bg-primary bg-gradient" id="sidebar"> 
+            <div class="sidebar shadow" id="sidebar"> 
                 <div id="sidebar-close" style="cursor: pointer">
                     <i class="ri-arrow-left-double-fill"></i>
                 </div>
-                <h1 class="h1 text-center mt-5" style="font-size: 35px">SURSAC</h1>
-                <nav class="text-center px-4">
-                    <ul class="list-unstyled w-100">
+                <a href="{{ route('dashboard') }}" style="text-decoration: none;">
+                    <h1 class="sidebar__titulo h1 text-center mt-5 fw-normal" style="font-size: 35px">SUR<span class="fw-bold">SAC</span></h1>
+                </a>
+                <nav class="text-center px-4 mb-4">
+                    <ul class="list-unstyled w-100 mb-5">
                         <li class="">
-                            <a class="mt-3 btn btn-info w-100 border border-secondary rounded" href="#">CLIENTES</a>
+                            <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="">CLIENTES</a>
                         </li>
                         <li class="">
-                            <a class="mt-3 btn btn-info w-100 border border-secondary rounded" href="#">PRODUCTOS</a>
+                            <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="{{ route('productos') }}">PRODUCTOS</a>
                         </li>
                         <li class="">
-                            <a class="mt-3 btn btn-info w-100 border border-secondary rounded" href="#">VENTAS</a>
+                            <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="{{ route('ventas') }}">VENTAS</a>
                         </li>
                         <li class="">
-                            <a class="mt-3 btn btn-info w-100 border border-secondary rounded" href="#">REPORTE</a>
+                            <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="#">COMPRAS</a>
                         </li>
                         <li class="">
-                            <a class="mt-3 btn btn-info w-100 border border-secondary rounded" href="#">INVENTARIO</a>
+                            <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="#">INVENTARIO</a>
                         </li>
                         <li class="">
-                            <a class="mt-3 btn btn-info w-100 border border-secondary rounded" href="#">PROVEEDORES</a>
+                            <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="#">PROVEEDORES</a>
                         </li>
                     </ul>
+                    <a class="btn sidebar__enlace btn-volver text-white" href="">Volver</a>
                 </nav>
-                <a class="btn btn-info btn-volver" href="">Volver</a>
             </div>
             <div class="contenido-principal w-100">
                 <nav class="navbar navbar-dark bg-dark">

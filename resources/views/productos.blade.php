@@ -9,7 +9,7 @@
 @section('contenidoprincipal')
     <h1 class="text-center mt-5">PRODUCTOS</h1>
     <div class="controls d-flex flex-column gap-4 flex-md-row align-items-md-center justify-content-md-between">
-        <a href="" class="btn btn-primary d-block">
+        <a href="{{ route('registrar.producto') }}" class="btn btn-primary d-block">
             AGREGAR PRODUCTO
         </a>
         <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-2">

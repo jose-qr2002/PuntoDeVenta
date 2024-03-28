@@ -6,7 +6,7 @@
 
 @section('contenido')
     <nav class="bg-info py-2 px-2 d-flex align-items-center gap-2 mb-5">
-        <a href="" class="btn btn-light">
+        <a href="{{ route('productos') }}" class="btn btn-light">
             <i class="ri-arrow-left-line"></i>
         </a>
         <h1 class="mb-0">Registrar Producto</h1>
