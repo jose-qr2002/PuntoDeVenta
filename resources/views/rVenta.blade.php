@@ -4,15 +4,29 @@
 @endsection
 
 @section('contenido')
+
+<div class="titulo-barra titulo-barra-mas-claro bg-info text-dark p-3 mb-3">
+            <div class="d-flex justify-content-start align-items-center">
+                <button class="btn btn-light me-2">
+                    <i class="ri-arrow-left-line"></i>
+                </button>
+                REGISTRAR VENTA
+            </div>
+        </div>
+
+
     <div class="container">
+    
+       
+
         <h1 class="text-center mt-5">GENERAR NUEVA VENTA</h1>
 
         <div class="row mt-5">
-            <div class="col">
+            <div class="col-12 col-lg-6">
                 <label for="cliente">Cliente</label>
                 <input type="text" class="form-control" id="cliente" placeholder="DNI del cliente">
             </div>
-            <div class="col">
+            <div class="col-12 col-lg-6">
                 <label for="producto">Producto</label>
                 <input type="text" class="form-control" id="producto" placeholder="Ingrese el código del producto">
             </div>
@@ -29,7 +43,7 @@
         <div class="row mt-5">
             <div class="col">
                 <div class="table-responsive">
-                    <table class="table mt-3 table-striped table-bordered">
+                    <table class="table mt-3 table-striped table-bordered text-center">
                         <thead>
                             <tr>
                                 <th>Nro</th>
@@ -49,29 +63,21 @@
                                     <td>3</td>
                                     <td>unidades</td>
                                     <td>
-                                        <button class="btn btn-secondary">Editar</button>
                                         <button class="btn btn-danger">Eliminar</button>
                                     </td>
                                 </tr>
                             @endfor
+                            </tbody>
+                        <tfoot>
+                            <tr>
+                                <td colspan="3"></td>
+                                <td colspan="2" class="font-weight-bold">Total:</td>
+                                <td class="font-weight-bold">$300</td>
+                            </tr>
+                        </tfoot>
                         </tbody>
                     </table>
                 </div>
-            </div>
-        </div>
-
-        
-        <div class="row">
-            <div class="col">
-                <nav aria-label="Page navigation example" class="d-flex justify-content-end">
-                    <ul class="pagination">
-                        <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-                        <li class="page-item"><a class="page-link" href="#">1</a></li>
-                        <li class="page-item"><a class="page-link" href="#">2</a></li>
-                        <li class="page-item"><a class="page-link" href="#">3</a></li>
-                        <li class="page-item"><a class="page-link" href="#">Next</a></li>
-                    </ul>
-                </nav>
             </div>
         </div>
     </div>
