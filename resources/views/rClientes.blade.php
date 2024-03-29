@@ -7,9 +7,9 @@
 
 <div class="titulo-barra bg-info text-white p-3 mb-3">
     <div class="d-flex justify-content-between align-items-center">
-        <button class="btn btn-light me-2">
+        <a href="{{ route('cliente') }}" class="btn btn-light me-2">
             <i class="ri-arrow-left-line"></i> 
-        </button>
+        </a>
         <span class="h5 me-auto">REGISTRO DE CLIENTES</span>
     </div>
 </div>

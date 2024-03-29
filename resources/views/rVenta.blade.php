@@ -7,9 +7,9 @@
 
 <div class="titulo-barra titulo-barra-mas-claro bg-info text-dark p-3 mb-3">
             <div class="d-flex justify-content-start align-items-center">
-                <button class="btn btn-light me-2">
+                <a href="{{ route('ventas') }}" class="btn btn-light me-2">
                     <i class="ri-arrow-left-line"></i>
-                </button>
+                </a>
                 REGISTRAR VENTA
             </div>
         </div>

@@ -102,7 +102,7 @@
                 <nav class="text-center px-4 mb-4">
                     <ul class="list-unstyled w-100 mb-5">
                         <li class="">
-                            <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="">CLIENTES</a>
+                            <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="{{ route('cliente') }}">CLIENTES</a>
                         </li>
                         <li class="">
                             <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="{{ route('productos') }}">PRODUCTOS</a>

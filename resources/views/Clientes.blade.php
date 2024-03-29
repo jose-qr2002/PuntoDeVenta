@@ -15,7 +15,7 @@
             <button class="btn btn-outline-secondary" type="button">Buscar</button>
         </div>
     </div>
-    <a href="" class="mt-3 mt-md-0">
+    <a href="{{ route('registrar.cliente') }}" class="mt-3 mt-md-0">
         <button class="btn btn-primary">Registrar Cliente</button>
     </a>
 </div>

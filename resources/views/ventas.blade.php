@@ -28,7 +28,7 @@
         <div class="col-12 col-lg-6">
             <div class="container">
                 <div class="row">
-                    <a href="" class="btn btn-primary offset-lg-6 col-lg-6">
+                    <a href="{{ route('registrar.venta') }}" class="btn btn-primary offset-lg-6 col-lg-6">
                         Generar Nueva Venta
                     </a>
                 </div>
