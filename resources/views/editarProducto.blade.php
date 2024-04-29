@@ -9,12 +9,12 @@
         <a href="{{ route('productos.index') }}" class="btn btn-light">
             <i class="ri-arrow-left-line"></i>
         </a>
-        <h1 class="mb-0">Registrar Producto</h1>
+        <h1 class="mb-0">Editar Producto</h1>
     </nav>
     <div class="container">
         <div class="row">
             <div class="col-12 col-lg-8 mb-3">
-                <h2 class="text-center">Registrar Producto</h2>
+                <h2 class="text-center">Editar Producto</h2>
                 <form>
                     <div class="row mt-3">
                         <div class="col">

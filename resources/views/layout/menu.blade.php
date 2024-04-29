@@ -105,7 +105,7 @@
                             <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="{{ route('cliente') }}">CLIENTES</a>
                         </li>
                         <li class="">
-                            <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="{{ route('productos') }}">PRODUCTOS</a>
+                            <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="{{ route('productos.index') }}">PRODUCTOS</a>
                         </li>
                         <li class="">
                             <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="{{ route('ventas') }}">VENTAS</a>
