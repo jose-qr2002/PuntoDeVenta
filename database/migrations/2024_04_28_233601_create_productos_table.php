@@ -11,18 +11,22 @@ return new class extends Migration
      */
     public function up()
     {
+        Schema::create('categorias', function (Blueprint $table) {
+            $table->id();
+            $table->string('nombre');
+            $table->timestamps();
+        });
+
         Schema::create('productos', function (Blueprint $table) {
             $table->id();
             $table->string('nombre');
             $table->integer('stock');
             $table->decimal('precio', 8, 2);
-            $table->string('unidad');
-            $table->unsignedBigInteger('categoria_id')->nullable();
-            $table->unsignedBigInteger('proveedor_id')->nullable();
+            $table->enum('medida', ['pieza', 'rollo', 'galon']);
+            $table->unsignedBigInteger('categoria_id');
             $table->timestamps();
 
-            $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('NO ACTION')->onUpdate('CASCADE');
-            $table->foreign('proveedor_id')->references('id')->on('proveedores')->onDelete('NO ACTION')->onUpdate('CASCADE');
+            $table->foreign('categoria_id')->references('id')->on('categorias')->onDelete('NO ACTION')->onUpdate('NO ACTION');
         });
     }
 
