@@ -15,50 +15,45 @@
         <div class="row">
             <div class="col-12 col-lg-8 mb-3">
                 <h2 class="text-center">Registrar Producto</h2>
-                <form>
+                <form action="{{ route('productos.store') }}" method="POST">
+                    @csrf
                     <div class="row mt-3">
                         <div class="col">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre">
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col">
                             <label for="stock" class="form-label">Stock</label>
-                            <input type="number" class="form-control" id="stock" placeholder="Ingrese el stock" min="1">
+                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingrese el stock" min="1">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col">
                             <label for="precio" class="form-label">Precio</label>
-                            <input type="number" class="form-control" id="precio" placeholder="Ingrese el precio del producto" min="1">
+                            <input type="number" class="form-control" id="precio" name="precio" placeholder="Ingrese el precio del producto" step="0.01">
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col">
-                            <label for="unidad" class="form-label">Medida</label>
-                            <select id="unidad" class="form-select" aria-label="select unidad">
+                            <label for="medida" class="form-label">Medida</label>
+                            <select id="medida" name="medida" class="form-select" aria-label="select unidad">
                                 <option selected disabled value="">Seleccion una medida</option>
-                                <option value="1">Pieza</option>
-                                <option value="2">Par</option>
-                                <option value="3">Unidad</option>
+                                <option value="pieza">Pieza</option>
+                                <option value="rollo">Rollo</option>
+                                <option value="galon">Galon</option>
                             </select>
                         </div>
                     </div>
                     <div class="row mt-3">
                         <div class="col">
-                            <label for="unidad" class="form-label">Categoria</label>
-                            <select id="unidad" class="form-select" aria-label="select unidad">
+                            <label for="categoria_id" class="form-label">Categoria</label>
+                            <select id="categoria_id" name="categoria_id" class="form-select" aria-label="select unidad"> 
                                 <option selected disabled value="">Seleccion una categoria</option>
                                 <option value="1">Herramientas</option>
-                                <option value="2">Materiales de Contruccion</option>
+                                <option value="2">Materiales de Construccion</option>
                             </select>
-                        </div>
-                    </div>
-                    <div class="row mt-3">
-                        <div class="col">
-                            <label for="imagen" class="form-label">Seleccionar Imagen</label>
-                            <input type="file" class="form-control" id="imagen" accept=".jpg, .jpeg, .png">
                         </div>
                     </div>
                     <div class="row mt-4">
