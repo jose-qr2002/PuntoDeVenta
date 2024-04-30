@@ -9,7 +9,7 @@ Route::get('/productos/create', [ProductoController::class, 'create'])->name('pr
 Route::post('/productos/store', [ProductoController::class, 'store'])->name('productos.store');
 Route::get('/productos/edit/{idProducto}', [ProductoController::class, 'edit'])->name('productos.edit');
 Route::put('/productos/update/{idProducto}', [ProductoController::class, 'update'])->name('productos.update');
-Route::delete('/productos/delete/{idProducto}', [ProductoController::class, 'delete'])->name('productos.destroy');
+Route::delete('/productos/delete/{idProducto}', [ProductoController::class, 'destroy'])->name('productos.destroy');
 
 Route::get('/ventas', function () { return view('ventas'); })->name('ventas');
 

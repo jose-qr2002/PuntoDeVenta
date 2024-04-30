@@ -84,7 +84,22 @@ class ProductoController extends Controller
         }
     }
 
-    public function destroy() {
+    public function destroy($id)
+{
+    DB::beginTransaction();
 
+    try {
+        $producto = Producto::findOrFail($id);
+        $producto->delete();
+
+        DB::commit();
+        
+        return redirect()->route('productos.index')->with('success', 'producto eliminado');
+    } catch (\Exception $e) {
+        DB::rollBack();
+
+        return redirect()->route('productos.index')->with('error', 'fallo al eliminar el producto');
     }
+}
+
 }
