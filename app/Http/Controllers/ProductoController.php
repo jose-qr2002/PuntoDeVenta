@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Categoria;
 use App\Models\Producto;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
@@ -49,11 +50,38 @@ class ProductoController extends Controller
     }
 
     public function edit($id) {
-        return view('editarProducto');
+        $producto = Producto::findOrFail($id);
+        $categorias = Categoria::all();
+        return view('editarProducto', compact('producto', 'categorias'));
     }
 
-    public function update($id) {
+    public function update(Request $request, $id) {
+        $request->validate([
+            'nombre' => 'required|string',
+            'stock' => 'required|integer|min:0',
+            'precio' => 'required|numeric',
+            'medida' => 'required|in:pieza,rollo,galon',
+            'categoria_id' => 'required|integer'
+        ]);
 
+        try {
+            DB::beginTransaction();
+            $producto = Producto::findOrFail($id);
+    
+            $producto->update([
+                'nombre' => $request->nombre,
+                'stock' => $request->stock,
+                'precio' => $request->precio,
+                'medida' => $request->medida,
+                'categoria_id' => $request->categoria_id
+            ]);
+
+            DB::commit();
+            return redirect()->route('productos.index');
+        } catch (\Exception $e) {
+            DB::rollback();
+            return back()->with('mensaje', 'No se logro actualizar el producto');
+        }
     }
 
     public function destroy() {

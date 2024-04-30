@@ -15,46 +15,77 @@
         <div class="row">
             <div class="col-12 col-lg-8 mb-3">
                 <h2 class="text-center">Editar Producto</h2>
-                <form>
+                @session('mensaje')
+                    {{ $value }}
+                @endsession
+                <form action="{{ route('productos.update', $producto->id) }}" method="POST">
+                    @csrf
+                    @method('PUT')
                     <div class="row mt-3">
                         <div class="col">
                             <label for="nombre" class="form-label">Nombre</label>
-                            <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre">
+                            <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre" value="{{ old('nombre', $producto->nombre) }}">
                         </div>
                     </div>
+                    @error('nombre')
+                        <div class="alert alert-danger mt-3" role="alert">
+                            {{ $message }}
+                        </div>
+                    @enderror
                     <div class="row mt-3">
                         <div class="col">
                             <label for="stock" class="form-label">Stock</label>
-                            <input type="number" class="form-control" id="stock" placeholder="Ingrese el stock" min="1">
+                            <input type="number" class="form-control" id="stock" name="stock" placeholder="Ingrese el stock" min="1" value="{{ old('stock', $producto->stock) }}">
                         </div>
                     </div>
+                    @error('stock')
+                        <div class="alert alert-danger mt-3" role="alert">
+                            {{ $message }}
+                        </div>
+                    @enderror
                     <div class="row mt-3">
                         <div class="col">
                             <label for="precio" class="form-label">Precio</label>
-                            <input type="number" class="form-control" id="precio" placeholder="Ingrese el precio del producto" min="1">
+                            <input type="number" class="form-control" id="precio" name="precio" placeholder="Ingrese el precio del producto"  value="{{ old('precio', $producto->precio) }}">
                         </div>
                     </div>
+                    @error('precio')
+                        <div class="alert alert-danger mt-3" role="alert">
+                            {{ $message }}
+                        </div>
+                    @enderror
                     <div class="row mt-3">
                         <div class="col">
                             <label for="unidad" class="form-label">Medida</label>
-                            <select id="unidad" class="form-select" aria-label="select unidad">
+                            <select id="unidad" class="form-select" name="medida" aria-label="select unidad">
                                 <option selected disabled value="">Seleccion una medida</option>
-                                <option value="1">Pieza</option>
-                                <option value="2">Par</option>
-                                <option value="3">Unidad</option>
+                                <option value="pieza" {{ old('medida', $producto->medida) == 'pieza' ? 'selected' : ''}}>Pieza</option>
+                                <option value="rollo" {{ old('medida', $producto->medida) == 'rollo' ? 'selected' : ''}}>Rollo</option>
+                                <option value="galon" {{ old('medida', $producto->medida) == 'galon' ? 'selected' : ''}}>Galon</option>
                             </select>
                         </div>
                     </div>
+                    @error('medida')
+                        <div class="alert alert-danger mt-3" role="alert">
+                            {{ $message }}
+                        </div>
+                    @enderror
                     <div class="row mt-3">
                         <div class="col">
                             <label for="unidad" class="form-label">Categoria</label>
-                            <select id="unidad" class="form-select" aria-label="select unidad">
-                                <option selected disabled value="">Seleccion una categoria</option>
-                                <option value="1">Herramientas</option>
-                                <option value="2">Materiales de Contruccion</option>
+                            <select id="unidad" class="form-select" name="categoria_id" aria-label="select unidad">
+                                <option selected disabled value="">Seleccione una categoria</option>
+                                @foreach ($categorias as $categoria)
+                                    <option value="{{ $categoria->id }}" {{ old('categoria_id', $producto->categoria_id) == $categoria->id ? 'selected' : '' }}>{{ $categoria->nombre }}</option>
+                                @endforeach
                             </select>
                         </div>
                     </div>
+                    @error('categoria_id')
+                        <div class="alert alert-danger mt-3" role="alert">
+                            {{ $message }}
+                        </div>
+                    @enderror
                     <div class="row mt-3">
                         <div class="col">
                             <label for="imagen" class="form-label">Seleccionar Imagen</label>
