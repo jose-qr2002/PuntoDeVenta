@@ -49,14 +49,64 @@ class ProductoTest extends TestCase
 
 
     public function test_producto_create_validation(): void
-    {
+{
+    $productoData = [
+        'nombre' => '',
+        'stock' => '',
+        'precio' => '',
+        'medida' => '',
+        'categoria_id' => '',
+    ];
 
+    $response = $this->post(route('productos.store'), $productoData);
+
+    $response->assertStatus(302);
+
+    $response->assertSessionHasErrors([
+        'nombre',
+        'stock',
+        'precio',
+        'medida',
+        'categoria_id',
+    ]);
+
+    $preciosInvalidos = ['0', '-10', 'abc'];
+
+    foreach ($preciosInvalidos as $precio) {
+        $productoData['precio'] = $precio;
+
+        $response = $this->post(route('productos.store'), $productoData);
+
+        $response->assertStatus(302);
+
+        $response->assertSessionHasErrors('precio');
+    }
+}
+
+/*
+public function test_producto_create_exception(): void
+{
+    $nombre = 'pepito';
+    for ($i = 0; $i < 255; $i++) {
+        $nombre .= ' pepito';
     }
 
-    public function test_producto_create_exception(): void
-    {
+    $productoData = [
+        'nombre' => $nombre,
+        'stock' => 10,
+        'precio' => 99.99,
+        'medida' => 'pieza',
+        'categoria_id' => 1,
+    ];
 
-    }
+    $response = $this->post(route('productos.store'), $productoData);
+    $response->assertStatus(302);
+    $response->assertRedirect(route('productos.create'));
+    $response->assertSessionHas('error');
+}*/
+
+
+
 
     public function test_producto_update():void
     {
