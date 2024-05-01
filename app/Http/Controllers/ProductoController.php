@@ -58,10 +58,10 @@ class ProductoController extends Controller
     public function update(Request $request, $id) {
         $request->validate([
             'nombre' => 'required|string',
-            'stock' => 'required|integer|min:0',
-            'precio' => 'required|numeric',
+            'stock' => 'required|integer|min:1',
+            'precio' => 'required|numeric|min:0.01',
             'medida' => 'required|in:pieza,rollo,galon',
-            'categoria_id' => 'required|integer'
+            'categoria_id' => 'required|exists:categorias,id'
         ]);
 
         try {
