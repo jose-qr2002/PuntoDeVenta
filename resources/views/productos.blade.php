@@ -8,6 +8,16 @@
 
 @section('contenidoprincipal')
     <h1 class="text-center mt-5">PRODUCTOS</h1>
+    @session('success')
+        <div class="alert alert-success text-center fw-bold mx-auto px-4" style="width: max-content;" role="alert">
+            {{ $value }}
+        </div>
+    @endsession
+    @session('error')
+        <div class="alert alert-danger text-center fw-bold" role="alert">
+            {{ $value }}
+        </div>
+    @endsession
     <div class="controls d-flex flex-column gap-4 flex-md-row align-items-md-center justify-content-md-between">
         <a href="{{ route('productos.create') }}" class="btn btn-primary d-block">
             AGREGAR PRODUCTO

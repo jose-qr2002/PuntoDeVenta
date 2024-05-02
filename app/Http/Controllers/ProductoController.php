@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use App\Models\Producto;
+use App\Utils\LogHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
@@ -44,8 +45,10 @@ class ProductoController extends Controller
             return redirect()->route('productos.index')->with('success', 'Producto registrado exitosamente.');
         } catch (\Exception $e) {
             DB::rollBack();
+            LogHelper::logError($this,$e);
 
-            return redirect()->route('productos.create')->with('error', 'Ocurrió un error al registrar el producto.');
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            return redirect()->route('productos.create')->with('error', $fechaHoraActual.' Ocurrió un error al registrar el producto.');
         }
     }
 
@@ -77,10 +80,13 @@ class ProductoController extends Controller
             ]);
 
             DB::commit();
-            return redirect()->route('productos.index');
+            return redirect()->route('productos.index')->with('success', 'Producto Actualizado');;
         } catch (\Exception $e) {
             DB::rollback();
-            return back()->with('mensaje', 'No se logro actualizar el producto');
+            LogHelper::logError($this,$e);
+
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            return back()->with('error', $fechaHoraActual.' No se logro actualizar el producto');
         }
     }
 
@@ -94,11 +100,13 @@ class ProductoController extends Controller
 
         DB::commit();
         
-        return redirect()->route('productos.index')->with('success', 'producto eliminado');
+        return redirect()->route('productos.index')->with('success', 'Producto eliminado');
     } catch (\Exception $e) {
         DB::rollBack();
+        LogHelper::logError($this,$e);
 
-        return redirect()->route('productos.index')->with('error', 'fallo al eliminar el producto');
+        $fechaHoraActual = date("Y-m-d H:i:s");
+        return redirect()->route('productos.index')->with('error', $fechaHoraActual.' Fallo al eliminar el producto');
     }
 }
 

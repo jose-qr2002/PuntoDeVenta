@@ -205,7 +205,7 @@ public function test_producto_create_exception(): void
             $response = $this->put(route('productos.update', $producto->id), $productoTest);
             $response->assertStatus(302);
             $response->assertSessionHas([
-                'mensaje'
+                'error'
             ]);
 
         }

@@ -15,8 +15,10 @@
         <div class="row">
             <div class="col-12 col-lg-8 mb-3">
                 <h2 class="text-center">Editar Producto</h2>
-                @session('mensaje')
-                    {{ $value }}
+                @session('error')
+                    <div class="alert alert-warning mt-3" role="alert">
+                        {{ $value }}
+                    </div>
                 @endsession
                 <form action="{{ route('productos.update', $producto->id) }}" method="POST">
                     @csrf
@@ -94,7 +96,7 @@
                     </div>
                     <div class="row mt-4">
                         <div class="col">
-                            <button type="submit" class="btn btn-primary">Agregar Producto</button>
+                            <button type="submit" class="btn btn-primary">Guardar</button>
                         </div>
                     </div>
                 </form>
