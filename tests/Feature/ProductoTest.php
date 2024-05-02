@@ -83,28 +83,23 @@ class ProductoTest extends TestCase
     }
 }
 
-/*
+
 public function test_producto_create_exception(): void
 {
-    $nombre = 'pepito';
-    for ($i = 0; $i < 255; $i++) {
-        $nombre .= ' pepito';
-    }
-
     $productoData = [
-        'nombre' => $nombre,
-        'stock' => 10,
-        'precio' => 99.99,
+        'nombre' => 'maletin',
+        'stock' => 6666666666666666,
+        'precio' => 10.02,
         'medida' => 'pieza',
         'categoria_id' => 1,
     ];
 
     $response = $this->post(route('productos.store'), $productoData);
     $response->assertStatus(302);
-    $response->assertRedirect(route('productos.create'));
-    $response->assertSessionHas('error');
-}*/
-
+    $response->assertSessionHas([
+        'error',
+    ]);
+}
 
 
 
