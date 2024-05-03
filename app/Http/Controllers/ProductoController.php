@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\Categoria;
 use App\Models\Producto;
-use App\Utils\LogHelper;
+use App\utils\LogHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 
