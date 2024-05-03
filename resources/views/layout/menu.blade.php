@@ -92,7 +92,7 @@
     <div class="" style="min-height: 100%">
         <div class="separador d-flex bg-light" style="height: 100vh">
             <!-- Sidebar -->
-            <div class="sidebar shadow" id="sidebar"> 
+            <div class="sidebar shadow animate__animated animate__fadeInLeft" id="sidebar"> 
                 <div id="sidebar-close" style="cursor: pointer">
                     <i class="ri-arrow-left-double-fill"></i>
                 </div>
@@ -124,7 +124,7 @@
                 </nav>
             </div>
             <div class="contenido-principal w-100">
-                <nav class="navbar navbar-dark bg-dark">
+                <nav class="navbar navbar-dark bg-dark animate__animated animate__fadeInDown">
                     <div class="container-fluid">
                         <div id="sidebar-open" style="cursor: pointer">
                             <i class="ri-menu-2-line display-6 text-white"></i>

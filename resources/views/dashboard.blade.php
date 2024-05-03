@@ -11,10 +11,10 @@
 @endsection
 
 @section('contenidoprincipal')
-    <h1 class="mt-2 mb-4">
+    <h1 class="mt-2 mb-4 animate__animated animate__fadeInRight">
         Dashboard
     </h1>
-    <div class="row g-3">
+    <div class="row g-3 animate__animated animate__fadeInRight">
         <div class="col-12 col-sm-6 col-lg-3">
             <div class="card bg-warning bg-gradient bg-opacity-75 text-white">
                 <div class="card-header text-center font-bold fw-semibold">
@@ -142,8 +142,6 @@
                 </ul>
             </div>
         </div>
-        
     </div>
-    
 @endsection
 

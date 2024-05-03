@@ -5,13 +5,13 @@
 @endsection
 
 @section('contenido')
-    <nav class="bg-info py-2 px-2 d-flex align-items-center gap-2 mb-5">
+    <nav class="bg-info py-2 px-2 d-flex align-items-center gap-2 mb-5 animate__animated animate__fadeInDown">
         <a href="{{ route('productos.index') }}" class="btn btn-light">
             <i class="ri-arrow-left-line"></i>
         </a>
         <h1 class="mb-0">Registrar Producto</h1>
     </nav>
-    <div class="container">
+    <div class="container animate__animated animate__fadeInUp">
         <div class="row">
             <div class="col-12 col-lg-8 mb-3">
                 <h2 class="text-center">Registrar Producto</h2>

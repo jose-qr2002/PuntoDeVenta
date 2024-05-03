@@ -7,18 +7,18 @@
 @endsection
 
 @section('contenidoprincipal')
-    <h1 class="text-center mt-5">PRODUCTOS</h1>
+    <h1 class="text-center mt-5 animate__animated animate__fadeInRight">PRODUCTOS</h1>
     @session('success')
-        <div class="alert alert-success text-center fw-bold mx-auto px-4" style="width: max-content;" role="alert">
+        <div class="animate__animated animate__rotateIn alert alert-success text-center fw-bold mx-auto px-4" style="width: max-content;" role="alert">
             {{ $value }}
         </div>
     @endsession
     @session('error')
-        <div class="alert alert-danger text-center fw-bold" role="alert">
+        <div class="animate__animated animate__rotateIn alert alert-danger text-center fw-bold" role="alert">
             {{ $value }}
         </div>
     @endsession
-    <div class="controls d-flex flex-column gap-4 flex-md-row align-items-md-center justify-content-md-between">
+    <div class="controls d-flex flex-column gap-4 flex-md-row align-items-md-center justify-content-md-between animate__animated animate__fadeInRight">
         <a href="{{ route('productos.create') }}" class="btn btn-primary d-block">
             AGREGAR PRODUCTO
         </a>
@@ -27,7 +27,7 @@
             <button class="btn btn-outline-secondary w-100" type="button">Buscar</button>
         </div>
     </div>
-    <div class="table-responsive">
+    <div class="table-responsive animate__animated animate__fadeInRight">
         <table class="table mt-3 table-striped table-bordered text-center" style="min-width: 700px">
             <thead class="table-dark">
                 <tr>
@@ -65,7 +65,7 @@
         </table>
     </div>
     <!-- Pagination icons -->
-    <div>
+    <div class="animate__animated animate__fadeInRight">
         <nav aria-label="Page navigation example" class="d-flex justify-content-end">
             <ul class="pagination">
             <li class="page-item"><a class="page-link" href="#">Previous</a></li>

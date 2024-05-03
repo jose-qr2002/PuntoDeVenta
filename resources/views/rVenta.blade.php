@@ -5,7 +5,7 @@
 
 @section('contenido')
 
-<div class="titulo-barra titulo-barra-mas-claro bg-info text-dark p-3 mb-3">
+<div class="titulo-barra titulo-barra-mas-claro bg-info text-dark p-3 mb-3 animate__animated animate__fadeInDown">
             <div class="d-flex justify-content-start align-items-center">
                 <a href="{{ route('ventas') }}" class="btn btn-light me-2">
                     <i class="ri-arrow-left-line"></i>
@@ -15,7 +15,7 @@
         </div>
 
 
-    <div class="container">
+    <div class="container animate__animated animate__fadeInUp">
     
        
 

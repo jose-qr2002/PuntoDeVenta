@@ -5,7 +5,7 @@
 
 @section('contenido')
 
-<div class="titulo-barra bg-info text-white p-3 mb-3">
+<div class="titulo-barra bg-info text-white p-3 mb-3 animate__animated animate__fadeInDown">
     <div class="d-flex justify-content-between align-items-center">
         <a href="{{ route('cliente') }}" class="btn btn-light me-2">
             <i class="ri-arrow-left-line"></i> 
@@ -15,7 +15,7 @@
 </div>
 
 
-<div class="container">
+<div class="container animate__animated animate__fadeInUp">
     <div class="row">
         <div class="col-md-8">
             <h2 class="text-center">Registrar Clientes</h2>

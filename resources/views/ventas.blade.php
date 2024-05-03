@@ -9,8 +9,8 @@
 @endsection
 
 @section('contenidoprincipal')
-    <h1 class="text-center mt-5 mb-5">VENTAS</h1>
-    <div class="row">
+    <h1 class="text-center mt-5 mb-5 animate__animated animate__fadeInRight">VENTAS</h1>
+    <div class="row animate__animated animate__fadeInRight">
         <div class="col-12 col-lg-6 mb-3 mb-lg-0">
             <div class="row">
                 <div class="col-12 col-lg-6 mb-3 mb-lg-0">
@@ -35,7 +35,7 @@
             </div>
         </div>
     </div>
-    <div class="table-responsive shadow mt-3 mb-3">
+    <div class="table-responsive shadow mt-3 mb-3 animate__animated animate__fadeInRight">
         <table class="table table-striped table-bordered text-center mb-0" style="min-width: 700px">
             <thead class="table-dark">
                 <tr>
@@ -151,7 +151,7 @@
         </table>
     </div>
     <!-- Pagination icons -->
-    <div>
+    <div class="animate__animated animate__fadeInRight">
         <nav aria-label="Page navigation example" class="d-flex justify-content-end">
             <ul class="pagination">
             <li class="page-item"><a class="page-link" href="#">Previous</a></li>
