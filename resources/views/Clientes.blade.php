@@ -54,12 +54,34 @@
     <div class="animate__animated animate__fadeInRight">
         <nav aria-label="Page navigation example" class="d-flex justify-content-end">
             <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
+                <li class="page-item"><a class="page-link" href="#">Previous</a></li>
+                <li class="page-item"><a class="page-link" href="#">1</a></li>
+                <li class="page-item"><a class="page-link" href="#">2</a></li>
+                <li class="page-item"><a class="page-link" href="#">3</a></li>
+                <li class="page-item"><a class="page-link" href="#">Next</a></li>
             </ul>
         </nav>
     </div>
+
+    @if(session('error'))
+        <script>
+            let mensaje="{{ session('error') }}";
+            Swal.fire({
+                icon:"error",
+                html: `<span style="font-size: 16px;">${mensaje}</span>`,
+            });
+        </script>
+    @endif
+
+    @if(session('success'))
+        <script>
+            let mensaje="{{ session('success') }}";
+
+            Swal.fire({
+                icon:"success",
+                html: `<span style="font-size: 16px;">${mensaje}</span>`,
+            });
+        </script>
+    @endif
+
 @endsection
