@@ -10,7 +10,7 @@
         <a href="{{ route('clientes.index') }}" class="btn btn-light me-2">
             <i class="ri-arrow-left-line"></i> 
         </a>
-        <span class="h5 me-auto">REGISTRO DE CLIENTES</span>
+        <span class="h5 me-auto mb-0">REGISTRO DE CLIENTES</span>
     </div>
 </div>
 
@@ -18,33 +18,76 @@
 <div class="container animate__animated animate__fadeInUp">
     <div class="row">
         <div class="col-md-8">
-            <h2 class="text-center">Registrar Clientes</h2>
+            <h2 class="text-center">Registrar Cliente</h2>
 
-            <form>
+            <form action="{{ route('clientes.store') }}" method="POST" novalidate class="mb-3">
+                @csrf
                 <div class="row mt-4">
                     <div class="col">
                         <label for="dni">DNI</label>
-                        <input type="text" class="form-control" id="dni" placeholder="Ingrese el DNI">
+                        <input type="text" class="form-control" name="dni" id="dni" placeholder="Ingrese el DNI">
                     </div>
                 </div>
+                @error('dni')
+                    <div class="alert alert-danger mt-3">
+                        {{ $message }}
+                    </div>
+                @enderror
                 <div class="row mt-3">
                     <div class="col">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" id="nombre" placeholder="Ingrese el nombre">
+                        <label for="nombres">Nombres</label>
+                        <input type="text" class="form-control" name="nombres" id="nombres" placeholder="Ingrese los nombres">
                     </div>
                 </div>
+                @error('nombres')
+                    <div class="alert alert-danger mt-3">
+                        {{ $message }}
+                    </div>
+                @enderror
                 <div class="row mt-3">
                     <div class="col">
-                        <label for="apellido">Apellido</label>
-                        <input type="text" class="form-control" id="apellido" placeholder="Ingrese el apellido">
+                        <label for="apellidos">Apellidos</label>
+                        <input type="text" class="form-control" name="apllidos" id="apellidos" placeholder="Ingrese los apellidos">
                     </div>
                 </div>
+                @error('apellidos')
+                    <div class="alert alert-danger mt-3">
+                        {{ $message }}
+                    </div>
+                @enderror
                 <div class="row mt-3">
                     <div class="col">
                         <label for="correo">Correo</label>
-                        <input type="email" class="form-control" id="correo" placeholder="Ingrese el correo electrónico">
+                        <input type="email" class="form-control" name="correo" id="correo" placeholder="Ingrese el correo electrónico">
                     </div>
                 </div>
+                @error('correo')
+                    <div class="alert alert-danger mt-3">
+                        {{ $message }}
+                    </div>
+                @enderror
+                <div class="row mt-3">
+                    <div class="col">
+                        <label for="correo">Celular</label>
+                        <input type="text" class="form-control" name="correo" id="correo" placeholder="Ingrese el numero de celular">
+                    </div>
+                </div>
+                @error('celular')
+                    <div class="alert alert-danger mt-3">
+                        {{ $message }}
+                    </div>
+                @enderror
+                <div class="row mt-3">
+                    <div class="col">
+                        <label for="direccion">Direccion</label>
+                        <input type="text" class="form-control" name="direccion" id="direccion" placeholder="Ingrese la dirección">
+                    </div>
+                </div>
+                @error('direccion')
+                    <div class="alert alert-danger mt-3">
+                        {{ $message }}
+                    </div>
+                @enderror
                 <div class="row mt-4">
                     <div class="col">
                         <button type="submit" class="btn btn-primary">Agregar</button>
@@ -53,11 +96,21 @@
             </form>
         </div>
         <div class="col-md-4"> 
-            <div class="text-center mt-5">
+            <div class="text-center">
                 <img src="{{ asset('img/3.png') }}" alt="Imagen" class="img-fluid">
             </div>
         </div>
     </div>
 </div>
+
+@if (session('error'))
+    <script>
+        let mensaje="{{ session('error') }}";
+        Swal.fire({
+            icon:"error",
+            html: `<span style="font-size: 16px;">${mensaje}</span>`,
+        });
+    </script>
+@endif
 
 @endsection

@@ -12,4 +12,8 @@ class ClienteController extends Controller
     $clientes = Cliente::all();
     return view('Clientes', compact('clientes'));
     }
+
+    public function create() {
+        return view('rClientes');
+    }
 }
