@@ -1,9 +1,9 @@
-{{-- Extender del menú en las vistas generales --}}
+{{-- resources/views/clientes/index.blade.php --}}
+
 @extends('layout.menu')
 
-{{-- En caso de usar el menú, usar la sección codigocabeceraprincipal para los estilos --}}
 @section('codigocabeceraprincipal')
-    
+    {{-- Agrega aquí cualquier estilo adicional que necesites --}}
 @endsection
 
 @section('contenidoprincipal')
@@ -26,24 +26,28 @@
                 <tr>
                     <th>DNI</th>
                     <th>Nombres</th>
-                    <th>Apellido</th>
+                    <th>Apellidos</th>
                     <th>Correo</th>
                     <th>Acciones</th>
                 </tr>
             </thead>
             <tbody>
-                @for ($i = 0; $i < 10; $i++)
+                @foreach ($clientes as $cliente)
                     <tr>
-                        <td>12345678{{$i}}</td>
-                        <td>Juan{{$i}}</td>
-                        <td>Pérez{{$i}}</td>
-                        <td>juan.perez{{$i}}@example.com</td>
+                        <td>{{ $cliente->dni }}</td>
+                        <td>{{ $cliente->nombres }}</td>
+                        <td>{{ $cliente->apellidos }}</td>
+                        <td>{{ $cliente->correo }}</td>
                         <td>
-                            <button class="btn btn-secondary">Editar</button>
-                            <button class="btn btn-danger">Eliminar</button>
+                            <a href="{{ route('clientes.edit', $cliente->id) }}" class="btn btn-secondary">Editar</a>
+                            <form action="{{ route('clientes.destroy', $cliente->id) }}" method="POST" style="display:inline-block;">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
                         </td>
                     </tr>
-                @endfor
+                @endforeach
             </tbody>
         </table>
     </div>
