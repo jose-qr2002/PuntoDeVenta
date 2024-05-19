@@ -12,21 +12,21 @@ return new class extends Migration
     {
         DB::table('clientes')->insert([
             [
-                'dni' => '123456789',
+                'dni' => '12345678',
                 'nombres' => 'Juan',
                 'apellidos' => 'Pérez',
                 'correo' => 'juan.perez@example.com',
-                'celular' => '1234567890',
+                'celular' => '978298536',
                 'direccion' => 'Calle Falsa 123',
                 'created_at' => now(),
                 'updated_at' => now(),
             ],
             [
-                'dni' => '987654321',
+                'dni' => '98765432',
                 'nombres' => 'María',
                 'apellidos' => 'Gómez',
                 'correo' => 'maria.gomez@example.com',
-                'celular' => '0987654321',
+                'celular' => '947289618',
                 'direccion' => 'Avenida Siempre Viva 456',
                 'created_at' => now(),
                 'updated_at' => now(),
