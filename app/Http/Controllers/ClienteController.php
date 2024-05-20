@@ -54,6 +54,11 @@ class ClienteController extends Controller
             return redirect()->route('clientes.create')->with('error', $fechaHoraActual.' Ocurrió un error al registrar el cliente.');
         }
     }
+
+    public function edit($id) {
+        $cliente = Cliente::findOrFail($id);
+        return view('editarCliente', compact('cliente'));
+    }
 }
 
 
