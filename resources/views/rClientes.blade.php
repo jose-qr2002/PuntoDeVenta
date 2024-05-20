@@ -25,7 +25,7 @@
                 <div class="row mt-4">
                     <div class="col">
                         <label for="dni">DNI</label>
-                        <input type="text" class="form-control" name="dni" id="dni" placeholder="Ingrese el DNI">
+                        <input type="text" class="form-control" name="dni" id="dni" placeholder="Ingrese el DNI" value="{{ old('dni') }}">
                     </div>
                 </div>
                 @error('dni')
@@ -36,7 +36,7 @@
                 <div class="row mt-3">
                     <div class="col">
                         <label for="nombres">Nombres</label>
-                        <input type="text" class="form-control" name="nombres" id="nombres" placeholder="Ingrese los nombres">
+                        <input type="text" class="form-control" name="nombres" id="nombres" placeholder="Ingrese los nombres" value="{{ old('nombres') }}">
                     </div>
                 </div>
                 @error('nombres')
@@ -47,7 +47,7 @@
                 <div class="row mt-3">
                     <div class="col">
                         <label for="apellidos">Apellidos</label>
-                        <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Ingrese los apellidos">
+                        <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Ingrese los apellidos" value="{{ old('apellidos') }}">
                     </div>
                 </div>
                 @error('apellidos')
@@ -58,7 +58,7 @@
                 <div class="row mt-3">
                     <div class="col">
                         <label for="correo">Correo</label>
-                        <input type="email" class="form-control" name="correo" id="correo" placeholder="Ingrese el correo electrónico">
+                        <input type="email" class="form-control" name="correo" id="correo" placeholder="Ingrese el correo electrónico" value="{{ old('correo') }}">
                     </div>
                 </div>
                 @error('correo')
@@ -69,7 +69,7 @@
                 <div class="row mt-3">
                     <div class="col">
                         <label for="celular">Celular</label>
-                        <input type="text" class="form-control" name="celular" id="celular" placeholder="Ingrese el numero de celular">
+                        <input type="text" class="form-control" name="celular" id="celular" placeholder="Ingrese el numero de celular" value="{{ old('celular') }}">
                     </div>
                 </div>
                 @error('celular')
@@ -80,7 +80,7 @@
                 <div class="row mt-3">
                     <div class="col">
                         <label for="direccion">Direccion</label>
-                        <input type="text" class="form-control" name="direccion" id="direccion" placeholder="Ingrese la dirección">
+                        <input type="text" class="form-control" name="direccion" id="direccion" placeholder="Ingrese la dirección" value="{{ old('direccion') }}">
                     </div>
                 </div>
                 @error('direccion')
