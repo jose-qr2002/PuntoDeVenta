@@ -15,11 +15,6 @@
         <div class="row">
             <div class="col-12 col-lg-8 mb-3">
                 <h2 class="text-center">Registrar Producto</h2>
-                @session('error')
-                    <div class="alert alert-warning mt-3" role="alert">
-                        {{ $value }}
-                    </div>
-                @endsession
                 <form action="{{ route('productos.store') }}" method="POST" novalidate>
                     @csrf
                     <div class="row mt-3">
@@ -100,4 +95,14 @@
             </div>
         </div>
     </div>
+    
+    @if (session('error'))
+    <script>
+        let mensaje="{{ session('error') }}";
+        Swal.fire({
+            icon:"error",
+            html: `<span style="font-size: 16px;">${mensaje}</span>`,
+        });
+    </script>
+    @endif
 @endsection

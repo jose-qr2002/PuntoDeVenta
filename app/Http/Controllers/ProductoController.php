@@ -86,28 +86,28 @@ class ProductoController extends Controller
             LogHelper::logError($this,$e);
 
             $fechaHoraActual = date("Y-m-d H:i:s");
-            return back()->with('error', $fechaHoraActual.' No se logro actualizar el producto');
+            return redirect()->route('productos.edit', $producto->id)->with('error', $fechaHoraActual.' No se logro actualizar el producto');
         }
     }
 
     public function destroy($id)
-{
-    DB::beginTransaction();
+    {
+        DB::beginTransaction();
 
-    try {
-        $producto = Producto::findOrFail($id);
-        $producto->delete();
+        try {
+            $producto = Producto::findOrFail($id);
+            $producto->delete();
 
-        DB::commit();
-        
-        return redirect()->route('productos.index')->with('success', 'Producto eliminado');
-    } catch (\Exception $e) {
-        DB::rollBack();
-        LogHelper::logError($this,$e);
+            DB::commit();
+            
+            return redirect()->route('productos.index')->with('success', 'Producto eliminado');
+        } catch (\Exception $e) {
+            DB::rollBack();
+            LogHelper::logError($this,$e);
 
-        $fechaHoraActual = date("Y-m-d H:i:s");
-        return redirect()->route('productos.index')->with('error', $fechaHoraActual.' Fallo al eliminar el producto');
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            return redirect()->route('productos.index')->with('error', $fechaHoraActual.' Fallo al eliminar el producto');
+        }
     }
-}
 
 }

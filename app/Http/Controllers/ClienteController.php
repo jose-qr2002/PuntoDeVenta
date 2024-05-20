@@ -94,6 +94,23 @@ class ClienteController extends Controller
             return redirect()->route('clientes.edit',$cliente->id)->with('error', $fechaHoraActual.' Ocurrió un error al actualizar el cliente.');
         }
     }
+
+    public function destroy($id) {
+        try {
+            DB::beginTransaction();
+            $cliente = Cliente::findOrFail($id);
+            $cliente->delete();
+            DB::commit();
+            return redirect()->route('clientes.index')->with('success', 'Cliente eliminado exitosamente');
+        } catch (\Exception $e) {
+            DB::rollback();
+            LogHelper::logError($this,$e);
+
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            return redirect()->route('clientes.index')->with('error', $fechaHoraActual.' Ocurrió un error al eliminar el cliente.');
+        }
+        
+    }
 }
 
 

@@ -15,11 +15,6 @@
         <div class="row">
             <div class="col-12 col-lg-8 mb-3">
                 <h2 class="text-center">Editar Producto</h2>
-                @session('error')
-                    <div class="alert alert-warning mt-3" role="alert">
-                        {{ $value }}
-                    </div>
-                @endsession
                 <form action="{{ route('productos.update', $producto->id) }}" method="POST">
                     @csrf
                     @method('PUT')
@@ -108,4 +103,14 @@
             </div>
         </div>
     </div>
+
+    @if (session('error'))
+    <script>
+        let mensaje="{{ session('error') }}";
+        Swal.fire({
+            icon:"error",
+            html: `<span style="font-size: 16px;">${mensaje}</span>`,
+        });
+    </script>
+    @endif
 @endsection
