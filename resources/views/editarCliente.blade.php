@@ -91,7 +91,7 @@
                 @enderror
                 <div class="row mt-4">
                     <div class="col">
-                        <button type="submit" class="btn btn-primary">Actualizar</button>
+                        <button type="submit" class="btn btn-primary">Actualizar Cambios</button>
                     </div>
                 </div>
             </form>
