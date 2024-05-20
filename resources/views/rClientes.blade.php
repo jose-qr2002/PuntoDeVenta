@@ -47,7 +47,7 @@
                 <div class="row mt-3">
                     <div class="col">
                         <label for="apellidos">Apellidos</label>
-                        <input type="text" class="form-control" name="apllidos" id="apellidos" placeholder="Ingrese los apellidos">
+                        <input type="text" class="form-control" name="apellidos" id="apellidos" placeholder="Ingrese los apellidos">
                     </div>
                 </div>
                 @error('apellidos')
@@ -68,8 +68,8 @@
                 @enderror
                 <div class="row mt-3">
                     <div class="col">
-                        <label for="correo">Celular</label>
-                        <input type="text" class="form-control" name="correo" id="correo" placeholder="Ingrese el numero de celular">
+                        <label for="celular">Celular</label>
+                        <input type="text" class="form-control" name="celular" id="celular" placeholder="Ingrese el numero de celular">
                     </div>
                 </div>
                 @error('celular')
