@@ -240,4 +240,21 @@ public function test_cliente_create_exception(): void
         $response->assertSessionHas('error');
     }
 
+    public function test_cliente_destroy_succes():void
+    {
+        $cliente = Cliente::findOrFail(1);
+        $response = $this->delete(route('clientes.destroy',$cliente->id));
+        $response->assertStatus(302);
+        $response->assertRedirect(route('clientes.index'));
+        $this->assertDatabaseMissing('clientes',$cliente->toArray());
+    }
+
+    public function test_cliente_destroy_exception():void
+    {
+        $response = $this->delete(route('clientes.destroy',99999999));
+        $response->assertStatus(302);
+        $response->assertRedirect(route('clientes.index'));
+        $this->assertNotNull(session('error'));
+    }
+
 }
