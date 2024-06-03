@@ -24,6 +24,7 @@ class ProductoTest extends TestCase
     {
 
     $productoData = [
+        'codigo' => '841941000036',
         'nombre' => 'cepillin',
         'stock' => 10,
         'precio' => 99.99,
@@ -37,6 +38,7 @@ class ProductoTest extends TestCase
     $response->assertStatus(302);
 
     $this->assertDatabaseHas('productos', [
+        'codigo' => '841941000036',
         'nombre' => 'cepillin',
         'stock' => 10,
         'precio' => 99.99,
@@ -87,6 +89,7 @@ class ProductoTest extends TestCase
 public function test_producto_create_exception(): void
 {
     $productoData = [
+        'codigo' => '123546464624',
         'nombre' => 'maletin',
         'stock' => 6666666666666666,
         'precio' => 10.02,
@@ -107,6 +110,7 @@ public function test_producto_create_exception(): void
     {
         $producto = Producto::findOrFail(1); // Obtiene el registro de Martillo
         $productoData = [
+            'codigo' => $producto->codigo,
             'nombre' => $producto->nombre,
             'stock' => 5, // Cambiamos el stock pasa de 10 a 5
             'precio' => $producto->precio,
@@ -118,6 +122,7 @@ public function test_producto_create_exception(): void
         $response->assertRedirect(route('productos.index'));
         $this->assertDatabaseHas('productos', [
             'id' => $producto->id, // Verificamos que se hayan hecho los cambios en el registro seleccionado
+            'codigo' => $producto->codigo,
             'nombre' => $productoData["nombre"],
             'stock' => $productoData["stock"],
             'precio' => $productoData["precio"],

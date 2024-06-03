@@ -18,6 +18,7 @@ return new class extends Migration
 
         DB::table('productos')->insert([
             [
+                'codigo' => '5901234123457',
                 'nombre' => 'Llave Inglesa',
                 'stock' => 10,
                 'precio' => 999.99,
@@ -27,6 +28,7 @@ return new class extends Migration
                 'updated_at' => now()
             ],
             [
+                'codigo' => '5901244128657',
                 'nombre' => 'Taladro Electrico',
                 'stock' => 20,
                 'precio' => 19.99,
