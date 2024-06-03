@@ -12,15 +12,19 @@ class Producto extends Model
     protected $table = "productos";
 
     protected $fillable = [
+        'codigo',
         'nombre',
         'stock',
         'precio',
         'medida',
         'categoria_id',
-        'imagen'
     ];
 
     public function categoria() {
         return $this->belongsTo(Categoria::class, 'categoria_id');
+    }
+
+    public function facturadetalles() {
+        return $this->hasMany(FacturaDetalle::class, 'producto_id');
     }
 }

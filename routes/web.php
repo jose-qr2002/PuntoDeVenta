@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Controllers\ClienteController;
+use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\ProductoController;
 use Illuminate\Support\Facades\Route;
 
@@ -19,7 +20,7 @@ Route::get('clientes/edit/{idCliente}', [ClienteController::class, 'edit'])->nam
 Route::put('clientes/update/{idAlumno}', [ClienteController::class, 'update'])->name('clientes.update');
 Route::delete('clientes/delete/{idAlumno}', [ClienteController::class, 'destroy'])->name('clientes.destroy');
 
-Route::get('/ventas', function () { return view('ventas'); })->name('ventas');
+Route::get('/ventas', [FacturaController::class, 'index'])->name('ventas');
 
 Route::get('/rVenta', function () {
     return view('rVenta');

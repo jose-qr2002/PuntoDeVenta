@@ -17,4 +17,8 @@ class Cliente extends Model
         'celular',
         'direccion',
     ];
+
+    public function facturas() {
+        return $this->hasMany(Factura::class, 'cliente_id');
+    }
 }

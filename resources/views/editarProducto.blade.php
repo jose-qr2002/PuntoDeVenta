@@ -20,6 +20,17 @@
                     @method('PUT')
                     <div class="row mt-3">
                         <div class="col">
+                            <label for="codigo" class="form-label">Código</label>
+                            <input type="text" class="form-control" id="codigo" name="codigo" placeholder="Ingrese el codigo" value="{{ old('codigo', $producto->codigo) }}">
+                        </div>
+                    </div>
+                    @error('codigo')
+                        <div class="alert alert-danger mt-3" role="alert">
+                            {{ $message }}
+                        </div>
+                    @enderror
+                    <div class="row mt-3">
+                        <div class="col">
                             <label for="nombre" class="form-label">Nombre</label>
                             <input type="text" class="form-control" id="nombre" name="nombre" placeholder="Ingrese el nombre" value="{{ old('nombre', $producto->nombre) }}">
                         </div>
