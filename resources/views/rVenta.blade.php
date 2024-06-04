@@ -23,11 +23,17 @@
 
         <div class="row mt-5">
             <div class="col-12 col-lg-6">
-                <label for="cliente">Cliente</label>
-                <input type="text" class="form-control" id="cliente" placeholder="DNI del cliente">
+                <div>
+                    <label class="fw-bold" for="cliente">Cliente:</label>
+                    <span>{{ $factura->cliente->nombres. ' ' . $factura->cliente->apellidos }}</span>
+                </div>
+                <div>
+                    <label class="fw-bold" for="cliente">Dni:</label>
+                    <span>{{ $factura->cliente->dni }}</span>
+                </div>
             </div>
             <div class="col-12 col-lg-6">
-                <label for="producto">Producto</label>
+                <label class="fw-semibold" for="producto">Añadir Producto</label>
                 <input type="text" class="form-control" id="producto" placeholder="Ingrese el código del producto">
             </div>
         </div>
@@ -39,7 +45,9 @@
                 <button class="btn btn-primary">Generar</button>
             </div>
         </div>
-
+        @php
+            $contador = 1;
+        @endphp
         <div class="row mt-5">
             <div class="col">
                 <div class="table-responsive">
@@ -49,30 +57,33 @@
                                 <th>Nro</th>
                                 <th>Nombre</th>
                                 <th>Stock</th>
-                                <th>Precio</th>
+                                <th>Precio Unitario</th>
                                 <th>Unidad</th>
+                                <th>Total</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @for ($i = 0; $i < 10; $i++)
+                            @foreach ($factura->detalles as $detalle)
                                 <tr>
-                                    <td>{{$i+1}}</td>
-                                    <td>Llave Inglesa</td>
-                                    <td>30</td>
-                                    <td>3</td>
-                                    <td>unidades</td>
-                                    <td>
-                                        <button class="btn btn-danger">Eliminar</button>
-                                    </td>
+                                    <td>{{ $contador }}</td>
+                                    <td>{{ $detalle->producto->nombre }}</td>
+                                    <td>{{ $detalle->cantidad }}</td>
+                                    <td>S/{{ $detalle->precion_unitario }}</td>
+                                    <td>{{ $detalle->producto->medida }}</td>
+                                    <td>S/{{ $detalle->precion_unitario * $detalle->cantidad }}</td>
+                                    <td><button class="btn btn-danger">Descartar</button></td>
                                 </tr>
-                            @endfor
+                                @php
+                                    $contador++;
+                                @endphp
+                            @endforeach
                             </tbody>
                         <tfoot>
                             <tr>
                                 <td colspan="3"></td>
-                                <td colspan="2" class="font-weight-bold">Total:</td>
-                                <td class="font-weight-bold">$300</td>
+                                <td colspan="2" class="font-weight-bold">Monto Total:</td>
+                                <td class="font-weight-bold">S/{{ $factura->monto_total }}</td>
                             </tr>
                         </tfoot>
                         </tbody>
