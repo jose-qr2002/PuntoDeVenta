@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FacturaController;
+use App\Http\Controllers\FacturaDetalleController;
 use App\Http\Controllers\ProductoController;
 use App\Models\FacturaDetalle;
 use Illuminate\Support\Facades\Route;
@@ -27,5 +28,6 @@ Route::get('/rVenta', function () {
     return view('rVenta');
 })->name('registrar.venta');
 
-Route::post('/facturas/{idFactura}/detalles/{idDetalle}', [FacturaDetalle::class, 'store'])->name('detalles.store');
+Route::get('/factura/{idFactura}/detalles', [FacturaDetalleController::class, 'index'])->name('detalles.index');
+Route::post('/factura/{idFactura}/detalles/{idDetalle}', [FacturaDetalleController::class, 'store'])->name('detalles.store');
 
