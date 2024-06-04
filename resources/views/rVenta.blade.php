@@ -21,8 +21,8 @@
 
         <h1 class="text-center mt-5">GENERAR NUEVA VENTA</h1>
 
-        <div class="row mt-5">
-            <div class="col-12 col-lg-6">
+        <div class="row mt-5 ">
+            <div class="col-12 col-lg-6 mb-3">
                 <div>
                     <label class="fw-bold" for="cliente">Cliente:</label>
                     <span>{{ $factura->cliente->nombres. ' ' . $factura->cliente->apellidos }}</span>
@@ -33,8 +33,17 @@
                 </div>
             </div>
             <div class="col-12 col-lg-6">
-                <label class="fw-semibold" for="producto">Añadir Producto</label>
-                <input type="text" class="form-control" id="producto" placeholder="Ingrese el código del producto">
+                <div class="">
+                    <label class="fw-semibold" for="producto">Añadir Producto</label>
+                    <div class="row">
+                        <div class="col-12 col-lg-8 mb-2">
+                            <input type="text" class="form-control" id="producto" placeholder="Ingrese el código del producto">
+                        </div>
+                        <div class="col-12 col-lg-4">
+                            <button class="btn btn-success w-100">Añadir</button>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
 
