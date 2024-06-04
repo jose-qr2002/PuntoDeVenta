@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\ProductoController;
+use App\Models\FacturaDetalle;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () { return view('dashboard'); })->name('dashboard');
@@ -26,4 +27,5 @@ Route::get('/rVenta', function () {
     return view('rVenta');
 })->name('registrar.venta');
 
+Route::post('/facturas/{idFactura}/detalles/{idDetalle}', [FacturaDetalle::class, 'store'])->name('detalles.store');
 

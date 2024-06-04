@@ -7,5 +7,7 @@ use App\utils\LogHelper;
 
 class FacturaDetalleController extends Controller
 {
-    //
+    public function store() {
+        
+    }
 }
