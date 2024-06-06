@@ -28,6 +28,8 @@ Route::get('/rVenta', function () {
     return view('rVenta');
 })->name('registrar.venta');
 
+Route::delete('/facturas/{idFactura}/deletewithd', [FacturaController::class, 'destroyWithDetalles'])->name('facturas.destroy.with.detalles');
+
 Route::get('/factura/{idFactura}/detalles', [FacturaDetalleController::class, 'index'])->name('detalles.index');
 Route::post('/factura/{idFactura}/detalles/store', [FacturaDetalleController::class, 'store'])->name('detalles.store');
 Route::get('/facturas/detalle/{idDetalle}/edit', [FacturaDetalleController::class, 'edit'])->name('detalles.edit');
