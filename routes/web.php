@@ -3,6 +3,7 @@
 use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\AtenderVentaController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () { return view('dashboard'); })->name('dashboard');
@@ -25,5 +26,13 @@ Route::get('/ventas', [FacturaController::class, 'index'])->name('ventas');
 Route::get('/rVenta', function () {
     return view('rVenta');
 })->name('registrar.venta');
+
+
+
+Route::get('/factura/create', [FacturaController::class, 'create'])->name('factura.create');
+Route::get('/aVenta', [FacturaController::class, 'index'])->name('atender.venta');
+Route::post('/buscar-cliente', [FacturaController::class, 'buscarCliente'])->name('buscar.cliente');
+Route::post('/factura/store', [FacturaController::class, 'store'])->name('factura.store');
+
 
 
