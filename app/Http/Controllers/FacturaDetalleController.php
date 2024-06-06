@@ -57,6 +57,11 @@ class FacturaDetalleController extends Controller
         }
     }
 
+    public function edit($idDetalle) {
+        $facturaDetalle = FacturaDetalle::findOrFail($idDetalle);
+        return view('editarDetalle', compact('facturaDetalle'));
+    }
+
     public function destroy($idDetalle) {
         try {
             DB::beginTransaction();

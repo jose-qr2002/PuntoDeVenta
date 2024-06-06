@@ -112,7 +112,8 @@
                                     <td>{{ $detalle->producto->medida }}</td>
                                     <td>S/{{ $detalle->precion_unitario * $detalle->cantidad }}</td>
                                     <td>
-                                        <form action="{{ route('detalles.destroy', $detalle->id) }}" method="POST">
+                                        <a href="{{ route('detalles.edit', $detalle->id) }}" class="btn btn-warning">Editar</a>
+                                        <form action="{{ route('detalles.destroy', $detalle->id) }}" method="POST" style="display: inline-flex;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Descartar</button></td>
