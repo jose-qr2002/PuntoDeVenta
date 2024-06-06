@@ -30,4 +30,4 @@ Route::get('/rVenta', function () {
 
 Route::get('/factura/{idFactura}/detalles', [FacturaDetalleController::class, 'index'])->name('detalles.index');
 Route::post('/factura/{idFactura}/detalles/store', [FacturaDetalleController::class, 'store'])->name('detalles.store');
-
+Route::delete('/facturas/detalle/{idDetalle}/delete', [FacturaDetalleController::class, 'destroy'])->name('detalles.destroy');

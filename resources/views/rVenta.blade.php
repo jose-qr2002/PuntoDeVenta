@@ -111,7 +111,12 @@
                                     <td>S/{{ $detalle->precion_unitario }}</td>
                                     <td>{{ $detalle->producto->medida }}</td>
                                     <td>S/{{ $detalle->precion_unitario * $detalle->cantidad }}</td>
-                                    <td><button class="btn btn-danger">Descartar</button></td>
+                                    <td>
+                                        <form action="{{ route('detalles.destroy', $detalle->id) }}" method="POST">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Descartar</button></td>
+                                        </form>
                                 </tr>
                                 @php
                                     $contador++;

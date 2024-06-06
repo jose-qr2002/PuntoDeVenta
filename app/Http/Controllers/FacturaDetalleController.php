@@ -28,7 +28,7 @@ class FacturaDetalleController extends Controller
         try {
             $producto = Producto::findOrFail($request->producto_id);
             $producto->stock = $producto->stock - 1;
-
+            $producto->save();
             $factura = Factura::findOrFail($request->factura_id);
             $facturaDetalle = new FacturaDetalle();
             $facturaDetalle->producto_id = $request->producto_id;
@@ -54,6 +54,32 @@ class FacturaDetalleController extends Controller
 
             $fechaHoraActual = date("Y-m-d H:i:s");
             return redirect()->route('detalles.index', $factura->id)->with('msn_error', $fechaHoraActual.' Ocurrió un error al registrar el producto.');
+        }
+    }
+
+    public function destroy($idDetalle) {
+        try {
+            DB::beginTransaction();
+            // Reservando registros
+            $detalle = FacturaDetalle::findOrFail($idDetalle);
+            $producto = $detalle->producto;
+            $factura = $detalle->factura;
+            // Devolucion de stock
+            $producto->stock = $producto->stock + $detalle->cantidad;
+            $producto->save();
+            // Actualizando monto
+            $factura->monto_total = $factura->monto_total - $detalle->cantidad * $detalle->precion_unitario;
+            $factura->save();
+            // Eliminando detalle
+            $detalle->delete();
+            DB::commit();
+            return redirect()->route('detalles.index', $factura->id)->with('msn_success', 'El producto se quito de la factura');
+        } catch (\Exception $e) {
+            DB::rollback();
+            LogHelper::logError($this,$e);
+
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            return redirect()->route('clientes.index', $factura->id)->with('msn_error', $fechaHoraActual.' Ocurrió un error al quitar el producto.');
         }
     }
 }
