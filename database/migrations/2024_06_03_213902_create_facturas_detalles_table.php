@@ -18,9 +18,11 @@ return new class extends Migration
             $table->integer('cantidad');
             $table->decimal('precion_unitario', 10, 2);
             $table->timestamps();
-
-            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('NO ACTION')->onUpdate('NO ACTION');
+            
+            $table->foreign('producto_id')->references('id')->on('productos')->onDelete('NO ACTION')->onUpdate('NO ACTION');    
             $table->foreign('factura_id')->references('id')->on('facturas')->onDelete('NO ACTION')->onUpdate('NO ACTION');
+        
+            $table->unique(['producto_id', 'factura_id']);
         });
     }
 

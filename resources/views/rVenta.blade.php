@@ -1,6 +1,24 @@
 @extends('cabecera')
 
 @section('codigocabecera')
+<style>
+    .cuadro-sugerencias {
+        position: absolute;
+        width: 100%;
+        background-color: rgb(236, 223, 223);
+    }
+
+    .item-sugerencia {
+        cursor: pointer;
+        padding: 9px;
+    }
+
+    .item-sugerencia:hover {
+        background-color: rgb(63, 146, 241);
+        color: white;
+    }
+</style>
+
 @endsection
 
 @section('contenido')
@@ -34,15 +52,27 @@
             </div>
             <div class="col-12 col-lg-6">
                 <div class="">
-                    <label class="fw-semibold" for="producto">Añadir Producto</label>
-                    <div class="row">
-                        <div class="col-12 col-lg-8 mb-2">
-                            <input type="text" class="form-control" id="producto" placeholder="Ingrese el código del producto">
+                    <form action="{{ route('detalles.store', $factura->id) }}" method="POST">
+                        @csrf
+                        <label class="fw-semibold" for="producto">Añadir Producto</label>
+                        <div class="row">
+                            <div class="col-12 col-lg-8 mb-2">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control" id="producto" placeholder="Ingrese el CODIGO del producto">
+                                    <input type="hidden" name="producto_id" id="idProducto" value="">
+                                    <input type="hidden" name="factura_id" id="factura_id" value="{{ $factura->id }}">
+                                    <div class="cuadro-sugerencias">
+                                    </div>
+                                    @error('idProducto')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <button type="submit" class="btn btn-success w-100">Añadir</button>
+                            </div>
                         </div>
-                        <div class="col-12 col-lg-4">
-                            <button class="btn btn-success w-100">Añadir</button>
-                        </div>
-                    </div>
+                    </form>
                 </div>
             </div>
         </div>
@@ -97,8 +127,104 @@
                         </tfoot>
                         </tbody>
                     </table>
+                    <div id="testing">
+                        boton testeador
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+
+    <script>
+        const cuadroSugerencias = document.querySelector('.cuadro-sugerencias');
+        const busquedaProductos = document.getElementById('producto');
+        const productos = [
+            @foreach ($productos as $producto)
+                {
+                    id: '{{$producto->id}}',
+                    codigo: '{{$producto->codigo}}',
+                    nombre: '{{$producto->nombre}}',
+                },
+            @endforeach
+        ];
+
+        let productosBuscados = [];
+
+        busquedaProductos.addEventListener('input', buscarProductos);
+
+        function buscarProductos(e) {
+            const busqueda = e.target.value;
+            if (busqueda.length > 3) {
+                productosBuscados = productos.filter(producto => {
+                    return producto.codigo.includes(busqueda);
+                })
+            } else {
+                productosBuscados = [];
+            }
+            mostrarProductos();
+            cuadroSugerencias.style.display = 'block';
+        }
+
+        function mostrarProductos() {
+            while(cuadroSugerencias.firstChild) {
+                cuadroSugerencias.removeChild(cuadroSugerencias.firstChild);
+            }
+
+            if (productosBuscados.length > 0) {
+                productosBuscados.forEach(producto => {
+                    const productoHTML = document.createElement('DIV');
+                    productoHTML.classList.add('item-sugerencia');
+                    productoHTML.textContent = producto.nombre;
+                    // Llenando de datos al HTML
+                    productoHTML.dataset.productoId = producto.id;
+                    productoHTML.dataset.productoCodigo = producto.codigo;
+                    productoHTML.dataset.productoNombre = producto.nombre;
+                    productoHTML.onclick = seleccionarProducto;
+                    // Añadir al DOM
+                    cuadroSugerencias.appendChild(productoHTML);
+    
+                });
+            }
+        }
+
+        // Mostrar y desaparecer sugerencias
+        document.addEventListener('click', function(e) {
+            const clickSugerencias = cuadroSugerencias.contains(e.target);
+            const clickBusquedaProductos = busquedaProductos.contains(e.target)
+
+            if(clickSugerencias || clickBusquedaProductos) {
+                cuadroSugerencias.style.display = 'block';
+            } else {
+                cuadroSugerencias.style.display = 'none';
+            }
+        });
+
+        function seleccionarProducto(e) {
+            const idProductoInput = document.getElementById('idProducto');
+            const idProductoSeleccionado = e.target.dataset.productoId;
+            const nombreProductoSeleccionado = e.target.dataset.productoNombre;
+            idProductoInput.value = idProductoSeleccionado;
+            productosBuscados = [];
+            busquedaProductos.value = nombreProductoSeleccionado;
+            mostrarProductos();
+        }
+    </script>
+    @if (session('msn_error'))
+        <script>
+            let mensaje="{{ session('msn_error') }}";
+            Swal.fire({
+                icon:"error",
+                html: `<span style="font-size: 16px;">${mensaje}</span>`,
+            });
+        </script>
+    @endif
+    @if (session('msn_success'))
+        <script>
+            let mensaje="{{ session('msn_success') }}";
+            Swal.fire({
+                icon:"success",
+                html: `<span style="font-size: 16px;">${mensaje}</span>`,
+            });
+        </script>
+    @endif
 @endsection

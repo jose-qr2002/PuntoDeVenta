@@ -29,5 +29,5 @@ Route::get('/rVenta', function () {
 })->name('registrar.venta');
 
 Route::get('/factura/{idFactura}/detalles', [FacturaDetalleController::class, 'index'])->name('detalles.index');
-Route::post('/factura/{idFactura}/detalles/{idDetalle}', [FacturaDetalleController::class, 'store'])->name('detalles.store');
+Route::post('/factura/{idFactura}/detalles/store', [FacturaDetalleController::class, 'store'])->name('detalles.store');
 
