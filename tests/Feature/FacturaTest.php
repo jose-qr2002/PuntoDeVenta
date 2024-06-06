@@ -57,4 +57,21 @@ public function test_factura_create_validation(): void
     $response->assertStatus(302);
     $response->assertSessionHasErrors(['cliente_id']);
 }
+
+public function test_generar_factura_success(): void
+{
+    $data = [
+        'cliente_id' => 10, 
+        'metodopago_id' => 1, 
+    ];
+
+    $this->withSession(['factura_id' => 1]);
+
+    $response = $this->post(route('factura.generar'), $data);
+
+    $response->assertRedirect(route('ventas'));
 }
+
+
+}
+

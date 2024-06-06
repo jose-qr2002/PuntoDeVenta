@@ -49,7 +49,7 @@
             <div class="col">
                 <button class="btn btn-secondary">Resetear</button>
                 <button class="btn btn-secondary">Cancelar</button>
-                <button class="btn btn-primary">Generar</button>
+                <a href="{{ route('generar.venta') }}" class="btn btn-primary">Generar</a>
             </div>
         </div>
 

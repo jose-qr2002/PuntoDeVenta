@@ -34,5 +34,5 @@ Route::get('/aVenta', [FacturaController::class, 'index'])->name('atender.venta'
 Route::post('/buscar-cliente', [FacturaController::class, 'buscarCliente'])->name('buscar.cliente');
 Route::post('/factura/store', [FacturaController::class, 'store'])->name('factura.store');
 
-
-
+Route::get('/generarV', [FacturaController::class, 'generarVenta'])->name('generar.venta');
+Route::post('/factura/generar/', [FacturaController::class, 'generarFactura'])->name('factura.generar');
