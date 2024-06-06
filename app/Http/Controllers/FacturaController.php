@@ -12,7 +12,8 @@ class FacturaController extends Controller
 {
     public function index()
     {
-        return view('ventas');
+        $facturas = Factura::all();
+        return view('ventas', compact('facturas'));
     }
 
     public function generarVenta(Request $request)
