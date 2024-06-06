@@ -79,7 +79,11 @@
 
         <div class="row mt-3">
             <div class="col">
-                <button class="btn btn-secondary">Resetear</button>
+                <form onsubmit="window.confirmaEliminarDetalles(event)" action="{{ route('detalles.destroy.all', $factura->id) }}" method="POST" style="display: inline-flex;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-secondary">Resetear</button>
+                </form>
                 <button class="btn btn-secondary">Cancelar</button>
                 <button class="btn btn-primary">Generar</button>
             </div>
@@ -223,6 +227,28 @@
             Swal.fire({
                 //title: "?",
                 text: "¿Estás seguro de que deseas quitar este producto?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si",
+                cancelButtonText: "No"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+    
+        }
+    </script>
+    <script>
+        function confirmaEliminarDetalles(event){
+            event.preventDefault();
+            let form=event.target;
+            
+            Swal.fire({
+                //title: "?",
+                text: "¿Estás seguro de que deseas quitar todos los productos?",
                 icon: "question",
                 showCancelButton: true,
                 confirmButtonColor: "#3085d6",

@@ -33,3 +33,4 @@ Route::post('/factura/{idFactura}/detalles/store', [FacturaDetalleController::cl
 Route::get('/facturas/detalle/{idDetalle}/edit', [FacturaDetalleController::class, 'edit'])->name('detalles.edit');
 Route::put('/facturas/detalle/{idDetalle}/update', [FacturaDetalleController::class, 'update'])->name('detalles.update');
 Route::delete('/facturas/detalle/{idDetalle}/delete', [FacturaDetalleController::class, 'destroy'])->name('detalles.destroy');
+Route::delete('/facturas/detalles/{idFactura}/deleteAll', [FacturaDetalleController::class, 'destroyAll'])->name('detalles.destroy.all');

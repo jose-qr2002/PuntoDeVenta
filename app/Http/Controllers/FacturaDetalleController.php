@@ -120,7 +120,36 @@ class FacturaDetalleController extends Controller
             LogHelper::logError($this,$e);
 
             $fechaHoraActual = date("Y-m-d H:i:s");
-            return redirect()->route('clientes.index', $factura->id)->with('msn_error', $fechaHoraActual.' Ocurrió un error al quitar el producto.');
+            return redirect()->route('detalles.index', $factura->id)->with('msn_error', $fechaHoraActual.' Ocurrió un error al quitar el producto.');
+        }
+    }
+
+    public function destroyAll($idFactura) {
+        try {
+            DB::beginTransaction();
+            // Reservando registros
+            $factura = Factura::findOrFail($idFactura);
+            
+            foreach($factura->detalles as $detalle) {
+                $producto = $detalle->producto;
+                // Devolucion de stock
+                $producto->stock = $producto->stock + $detalle->cantidad;
+                $producto->save();
+                // Eliminando detalle
+                $detalle->delete();
+            }
+            // Actualizando monto
+            $factura->monto_total = 0;
+            $factura->save();
+            
+            DB::commit();
+            return redirect()->route('detalles.index', $factura->id)->with('msn_success', 'Todos los productos se quitaron de la factura');
+        } catch (\Exception $e) {
+            DB::rollback();
+            LogHelper::logError($this,$e);
+
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            return redirect()->route('detalles.index', $factura->id)->with('msn_error', $fechaHoraActual.' Ocurrió un error al quitar los productos.');
         }
     }
 }
