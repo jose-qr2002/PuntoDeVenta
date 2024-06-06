@@ -36,120 +36,36 @@
         </div>
     </div>
     <div class="table-responsive shadow mt-3 mb-3 animate__animated animate__fadeInRight">
-        <table class="table table-striped table-bordered text-center mb-0" style="min-width: 700px">
-            <thead class="table-dark">
-                <tr>
-                    <th>Nro</th>
-                    <th>Fecha</th>
-                    <th>Tipo de Ticket</th>
-                    <th>Total</th>
-                    <th>Acciones</th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr>
-                    <td>1</td>
-                    <td>2024-03-28</td>
-                    <td>Efectivo</td>
-                    <td>S/150.00</td>
-                    <td>
-                        <button class="btn btn-warning">Ver Factura</button>
-                        <button class="btn btn-danger">Imprimir Factura</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>2</td>
-                    <td>2024-03-27</td>
-                    <td>Tarjeta de crédito</td>
-                    <td>S/230.50</td>
-                    <td>
-                        <button class="btn btn-warning">Ver Factura</button>
-                        <button class="btn btn-danger">Imprimir Factura</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>3</td>
-                    <td>2024-03-26</td>
-                    <td>Efectivo</td>
-                    <td>S/99.95</td>
-                    <td>
-                        <button class="btn btn-warning">Ver Factura</button>
-                        <button class="btn btn-danger">Imprimir Factura</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>4</td>
-                    <td>2024-03-25</td>
-                    <td>Tarjeta de débito</td>
-                    <td>S/75.60</td>
-                    <td>
-                        <button class="btn btn-warning">Ver Factura</button>
-                        <button class="btn btn-danger">Imprimir Factura</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>5</td>
-                    <td>2024-03-24</td>
-                    <td>Efectivo</td>
-                    <td>S/75.60</td>
-                    <td>
-                        <button class="btn btn-warning">Ver Factura</button>
-                        <button class="btn btn-danger">Imprimir Factura</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>6</td>
-                    <td>2024-03-23</td>
-                    <td>Tarjeta de crédito</td>
-                    <td>S/320.75</td>
-                    <td>
-                        <button class="btn btn-warning">Ver Factura</button>
-                        <button class="btn btn-danger">Imprimir Factura</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>7</td>
-                    <td>2024-03-22</td>
-                    <td>Efectivo</td>
-                    <td>S/200.00</td>
-                    <td>
-                        <button class="btn btn-warning">Ver Factura</button>
-                        <button class="btn btn-danger">Imprimir Factura</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>8</td>
-                    <td>2024-03-21</td>
-                    <td>Tarjeta de crédito</td>
-                    <td>S/175.30</td>
-                    <td>
-                        <button class="btn btn-warning">Ver Factura</button>
-                        <button class="btn btn-danger">Imprimir Factura</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>9</td>
-                    <td>2024-03-20</td>
-                    <td>Efectivo</td>
-                    <td>S/150.80</td>
-                    <td>
-                        <button class="btn btn-warning">Ver Factura</button>
-                        <button class="btn btn-danger">Imprimir Factura</button>
-                    </td>
-                </tr>
-                <tr>
-                    <td>10</td>
-                    <td>2024-03-19</td>
-                    <td>Tarjeta de débito</td>
-                    <td>S/210.45</td>
-                    <td>
-                        <button class="btn btn-warning">Ver Factura</button>
-                        <button class="btn btn-danger">Imprimir Factura</button>
-                    </td>
-                </tr>
-            </tbody>
-        </table>
-    </div>
+    <table class="table table-striped table-bordered text-center mb-0" style="min-width: 700px">
+        <thead class="table-dark">
+            <tr>
+                <th>Nro</th>
+                <th>Cliente</th>
+                <th>Fecha</th>
+                <th>Estado de pago</th>
+                <th>Metodo de Pago</th>
+                <th>Monto Total</th>
+                <th>Acciones</th>
+            </tr>
+        </thead>
+        <tbody>
+        @foreach($facturas as $factura)
+            <tr>
+                <td>{{ $factura->id }}</td>
+                <td>{{ $factura->cliente->nombres }}</td>
+                <td>{{ $factura->fecha }}</td>
+                <td>{{ $factura->estado }}</td>
+                <td>{{ $factura->metodoPago->metodo }}</td>
+                <td>{{ $factura->monto_total }}</td>
+                <td>
+                    <!-- Agrega tus botones aquí -->
+                    <button class="btn btn-warning">Ver Factura</button>
+                </td>
+            </tr>
+        @endforeach
+        </tbody>
+    </table>
+</div>
     <!-- Pagination icons -->
     <div class="animate__animated animate__fadeInRight">
         <nav aria-label="Page navigation example" class="d-flex justify-content-end">
