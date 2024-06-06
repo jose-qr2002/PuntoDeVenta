@@ -62,6 +62,42 @@ class FacturaDetalleController extends Controller
         return view('editarDetalle', compact('facturaDetalle'));
     }
 
+    public function update(Request $request, $idDetalle) {
+        $request->validate([
+            'precion_unitario' => 'required|numeric|min:0.1',
+            'cantidad' => 'required|integer|min:1'
+        ]);
+
+        DB::beginTransaction();
+
+        try {
+            $detalle = FacturaDetalle::findOrFail($idDetalle);
+            $factura = $detalle->factura;
+            $producto = $detalle->producto;
+            // Actualizando monto total
+            $factura->monto_total = $factura->monto_total - ($detalle->precion_unitario * $detalle->cantidad);
+            $factura->monto_total = $factura->monto_total + ($request->precion_unitario * $request->cantidad);
+            $factura->save();
+            // Actualizando stock
+            $producto->stock = $producto->stock + $detalle->cantidad;
+            $producto->stock = $producto->stock - $request->cantidad;
+            $producto->save();
+            // Actualizando detalle
+            $detalle->precion_unitario = $request->precion_unitario;
+            $detalle->cantidad = $request->cantidad;
+            $detalle->save();
+            DB::commit();
+            return redirect()->route('detalles.index', $factura->id)->with('msn_success', 'El Detalle se actualizo correctamente');
+
+        } catch (\Exception $e) {
+            DB::rollBack();
+            LogHelper::logError($this,$e);
+
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            return redirect()->route('detalles.edit', $idDetalle)->with('msn_error', $fechaHoraActual.' El detalle no se pudo actualizar');
+        }
+    }
+
     public function destroy($idDetalle) {
         try {
             DB::beginTransaction();

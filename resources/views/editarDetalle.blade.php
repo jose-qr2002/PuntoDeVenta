@@ -39,21 +39,31 @@
             <span>{{ $facturaDetalle->producto->stock }} {{$facturaDetalle->producto->medida}}s</span>
         </div>
     </div>
-    <form action="" method="POST" novalidate class="mb-3">
+    <form action="{{ route('detalles.update', $facturaDetalle->id) }}" method="POST" novalidate class="mb-3">
         @csrf
         @method('PUT')
         <div class="row mt-4">
             <div class="col">
-                <label for="">Precio Unitario</label>
-                <input type="number" class="form-control" placeholder="Ingrese el precio deseado" value="{{ $facturaDetalle->precion_unitario }}">
+                <label for="precion_unitario">Precio Unitario</label>
+                <input type="number" name="precion_unitario" id="precion_unitario" class="form-control" placeholder="Ingrese el precio deseado" value="{{ old('precion_unitario', $facturaDetalle->precion_unitario) }}">
             </div>
         </div>
+        @error('precion_unitario')
+            <div class="alert alert-danger mt-2">
+                {{ $message }}
+            </div>
+        @enderror
         <div class="row mt-4">
             <div class="col">
-                <label for="">Cantidad</label>
-                <input type="text" class="form-control" placeholder="Ingrese la cantidad deseada" value="{{ $facturaDetalle->cantidad }}">
+                <label for="cantidad">Cantidad</label>
+                <input type="text" name="cantidad" id="cantidad" class="form-control" placeholder="Ingrese la cantidad deseada" value="{{ old('cantidad', $facturaDetalle->cantidad) }}">
             </div>
         </div>
+        @error('cantidad')
+            <div class="alert alert-danger mt-2">
+                {{ $message }}
+            </div>
+        @enderror
         <div class="row mt-4">
             <div class="col">
                 <button type="submit" class="btn btn-primary">Actualizar Detalle</button>
