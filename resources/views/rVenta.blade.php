@@ -113,7 +113,7 @@
                                     <td>S/{{ $detalle->precion_unitario * $detalle->cantidad }}</td>
                                     <td>
                                         <a href="{{ route('detalles.edit', $detalle->id) }}" class="btn btn-warning">Editar</a>
-                                        <form action="{{ route('detalles.destroy', $detalle->id) }}" method="POST" style="display: inline-flex;">
+                                        <form onsubmit="window.confirmaEliminarDetalle(event)" action="{{ route('detalles.destroy', $detalle->id) }}" method="POST" style="display: inline-flex;">
                                             @csrf
                                             @method('DELETE')
                                             <button type="submit" class="btn btn-danger">Descartar</button></td>
@@ -213,6 +213,28 @@
             productosBuscados = [];
             busquedaProductos.value = nombreProductoSeleccionado;
             mostrarProductos();
+        }
+    </script>
+    <script>
+        function confirmaEliminarDetalle(event){
+            event.preventDefault();
+            let form=event.target;
+            
+            Swal.fire({
+                //title: "?",
+                text: "¿Estás seguro de que deseas quitar este producto?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si",
+                cancelButtonText: "No"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+    
         }
     </script>
     @if (session('msn_error'))
