@@ -35,7 +35,20 @@
 
     <div class="container animate__animated animate__fadeInUp">
     
-       
+        @if(session('msn_success'))
+        <div class="alert alert-success alert-dismissible fade show" role="alert">
+            {{ session('msn_success') }}
+            <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+        </div>
+        @endif
+
+        @if(session('msn_error'))
+            <div class="alert alert-danger alert-dismissible fade show" role="alert">
+                {{ session('msn_error') }}
+                <button type="button" class="btn-close" data-bs-dismiss="alert" aria-label="Close"></button>
+            </div>
+        @endif
+
 
         <h1 class="text-center mt-5">GENERAR NUEVA VENTA</h1>
 
@@ -89,7 +102,7 @@
                     @method('DELETE')
                     <button type="submit" class="btn btn-secondary">Cancelar Venta</button>
                 </form>
-                <button class="btn btn-primary">Generar</button>
+                <a href="{{ route('generar.venta', $factura->id) }}" class="btn btn-primary">Generar</a>
             </div>
         </div>
         @php

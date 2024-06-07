@@ -4,7 +4,6 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\FacturaDetalleController;
 use App\Http\Controllers\ProductoController;
-use App\Models\FacturaDetalle;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () { return view('dashboard'); })->name('dashboard');
@@ -24,9 +23,6 @@ Route::delete('clientes/delete/{idAlumno}', [ClienteController::class, 'destroy'
 
 Route::get('/ventas', [FacturaController::class, 'index'])->name('ventas');
 
-Route::get('/rVenta', function () {
-    return view('rVenta');
-})->name('registrar.venta');
 
 Route::delete('/facturas/{idFactura}/deletewithd', [FacturaController::class, 'destroyWithDetalles'])->name('facturas.destroy.with.detalles');
 
@@ -36,3 +32,11 @@ Route::get('/facturas/detalle/{idDetalle}/edit', [FacturaDetalleController::clas
 Route::put('/facturas/detalle/{idDetalle}/update', [FacturaDetalleController::class, 'update'])->name('detalles.update');
 Route::delete('/facturas/detalle/{idDetalle}/delete', [FacturaDetalleController::class, 'destroy'])->name('detalles.destroy');
 Route::delete('/facturas/detalles/{idFactura}/deleteAll', [FacturaDetalleController::class, 'destroyAll'])->name('detalles.destroy.all');
+
+Route::get('/factura/create', [FacturaController::class, 'create'])->name('factura.create');
+Route::get('/aVenta', [FacturaController::class, 'index'])->name('atender.venta');
+Route::post('/buscar-cliente', [FacturaController::class, 'buscarCliente'])->name('buscar.cliente');
+Route::post('/factura/store', [FacturaController::class, 'store'])->name('factura.store');
+
+Route::get('/generar/{idFactura}', [FacturaController::class, 'generarVenta'])->name('generar.venta');
+Route::post('/factura/generar/{idFactura}', [FacturaController::class, 'generarFactura'])->name('factura.generar');
