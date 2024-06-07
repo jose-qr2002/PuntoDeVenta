@@ -14,7 +14,7 @@
                     <h5 class="card-title mb-0">Generar Factura</h5>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="{{ route('factura.generar') }}"> 
+                    <form method="POST" action="{{ route('factura.generar', $factura->id) }}"> 
                         @csrf
                         <div class="form-group row">
                             <label for="cliente" class="col-sm-3 col-form-label">Cliente</label>
@@ -28,13 +28,13 @@
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">SubTotal</label>
                             <div class="col-sm-9">
-                                <p class="form-control-plaintext">$0.00</p>
+                                <p class="form-control-plaintext">{{ $factura->monto_total }}</p>
                             </div>
                         </div>
                         <div class="form-group row">
                             <label class="col-sm-3 col-form-label">Total</label>
                             <div class="col-sm-9">
-                                <p class="form-control-plaintext">$0.00</p>
+                                <p class="form-control-plaintext">{{ $factura->monto_total }}</p>
                             </div>
                         </div>
                         <div class="form-group row">

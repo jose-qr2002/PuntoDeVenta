@@ -1,6 +1,24 @@
 @extends('cabecera')
 
 @section('codigocabecera')
+<style>
+    .cuadro-sugerencias {
+        position: absolute;
+        width: 100%;
+        background-color: rgb(236, 223, 223);
+    }
+
+    .item-sugerencia {
+        cursor: pointer;
+        padding: 9px;
+    }
+
+    .item-sugerencia:hover {
+        background-color: rgb(63, 146, 241);
+        color: white;
+    }
+</style>
+
 @endsection
 
 @section('contenido')
@@ -34,25 +52,62 @@
 
         <h1 class="text-center mt-5">GENERAR NUEVA VENTA</h1>
 
-        <div class="row mt-5">
-            <div class="col-12 col-lg-6">
-                <label for="cliente">Cliente</label>
-                <input type="text" class="form-control" id="cliente" placeholder="DNI del cliente">
+        <div class="row mt-5 ">
+            <div class="col-12 col-lg-6 mb-3">
+                <div>
+                    <label class="fw-bold" for="cliente">Cliente:</label>
+                    <span>{{ $factura->cliente->nombres. ' ' . $factura->cliente->apellidos }}</span>
+                </div>
+                <div>
+                    <label class="fw-bold" for="cliente">Dni:</label>
+                    <span>{{ $factura->cliente->dni }}</span>
+                </div>
             </div>
             <div class="col-12 col-lg-6">
-                <label for="producto">Producto</label>
-                <input type="text" class="form-control" id="producto" placeholder="Ingrese el código del producto">
+                <div class="">
+                    <form action="{{ route('detalles.store', $factura->id) }}" method="POST">
+                        @csrf
+                        <label class="fw-semibold" for="producto">Añadir Producto</label>
+                        <div class="row">
+                            <div class="col-12 col-lg-8 mb-2">
+                                <div class="position-relative">
+                                    <input type="text" class="form-control" id="producto" placeholder="Ingrese el CODIGO del producto">
+                                    <input type="hidden" name="producto_id" id="idProducto" value="">
+                                    <input type="hidden" name="factura_id" id="factura_id" value="{{ $factura->id }}">
+                                    <div class="cuadro-sugerencias">
+                                    </div>
+                                    @error('idProducto')
+                                        <p class="text-danger">{{ $message }}</p>
+                                    @enderror
+                                </div>
+                            </div>
+                            <div class="col-12 col-lg-4">
+                                <button type="submit" class="btn btn-success w-100">Añadir</button>
+                            </div>
+                        </div>
+                    </form>
+                </div>
             </div>
         </div>
 
         <div class="row mt-3">
             <div class="col">
-                <button class="btn btn-secondary">Resetear</button>
-                <button class="btn btn-secondary">Cancelar</button>
-                <a href="{{ route('generar.venta') }}" class="btn btn-primary">Generar</a>
+                <form onsubmit="window.confirmaEliminarDetalles(event)" action="{{ route('detalles.destroy.all', $factura->id) }}" method="POST" style="display: inline-flex;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-secondary">Resetear</button>
+                </form>
+                <form onsubmit="window.confirmaCancelarVenta(event)" action="{{ route('facturas.destroy.with.detalles', $factura->id) }}" method="POST" style="display: inline-flex;">
+                    @csrf
+                    @method('DELETE')
+                    <button type="submit" class="btn btn-secondary">Cancelar Venta</button>
+                </form>
+                <a href="{{ route('generar.venta', $factura->id) }}" class="btn btn-primary">Generar</a>
             </div>
         </div>
-
+        @php
+            $contador = 1;
+        @endphp
         <div class="row mt-5">
             <div class="col">
                 <div class="table-responsive">
@@ -62,30 +117,39 @@
                                 <th>Nro</th>
                                 <th>Nombre</th>
                                 <th>Stock</th>
-                                <th>Precio</th>
+                                <th>Precio Unitario</th>
                                 <th>Unidad</th>
+                                <th>Total</th>
                                 <th>Acciones</th>
                             </tr>
                         </thead>
                         <tbody>
-                            @for ($i = 0; $i < 10; $i++)
+                            @foreach ($factura->detalles as $detalle)
                                 <tr>
-                                    <td>{{$i+1}}</td>
-                                    <td>Llave Inglesa</td>
-                                    <td>30</td>
-                                    <td>3</td>
-                                    <td>unidades</td>
+                                    <td>{{ $contador }}</td>
+                                    <td>{{ $detalle->producto->nombre }}</td>
+                                    <td>{{ $detalle->cantidad }}</td>
+                                    <td>S/{{ $detalle->precion_unitario }}</td>
+                                    <td>{{ $detalle->producto->medida }}</td>
+                                    <td>S/{{ $detalle->precion_unitario * $detalle->cantidad }}</td>
                                     <td>
-                                        <button class="btn btn-danger">Eliminar</button>
-                                    </td>
+                                        <a href="{{ route('detalles.edit', $detalle->id) }}" class="btn btn-warning">Editar</a>
+                                        <form onsubmit="window.confirmaEliminarDetalle(event)" action="{{ route('detalles.destroy', $detalle->id) }}" method="POST" style="display: inline-flex;">
+                                            @csrf
+                                            @method('DELETE')
+                                            <button type="submit" class="btn btn-danger">Descartar</button></td>
+                                        </form>
                                 </tr>
-                            @endfor
+                                @php
+                                    $contador++;
+                                @endphp
+                            @endforeach
                             </tbody>
                         <tfoot>
                             <tr>
                                 <td colspan="3"></td>
-                                <td colspan="2" class="font-weight-bold">Total:</td>
-                                <td class="font-weight-bold">$300</td>
+                                <td colspan="2" class="font-weight-bold">Monto Total:</td>
+                                <td class="font-weight-bold">S/{{ $factura->monto_total }}</td>
                             </tr>
                         </tfoot>
                         </tbody>
@@ -94,4 +158,163 @@
             </div>
         </div>
     </div>
+
+    <script>
+        const cuadroSugerencias = document.querySelector('.cuadro-sugerencias');
+        const busquedaProductos = document.getElementById('producto');
+        const productos = [
+            @foreach ($productos as $producto)
+                {
+                    id: '{{$producto->id}}',
+                    codigo: '{{$producto->codigo}}',
+                    nombre: '{{$producto->nombre}}',
+                },
+            @endforeach
+        ];
+
+        let productosBuscados = [];
+
+        busquedaProductos.addEventListener('input', buscarProductos);
+
+        function buscarProductos(e) {
+            const busqueda = e.target.value;
+            if (busqueda.length > 3) {
+                productosBuscados = productos.filter(producto => {
+                    return producto.codigo.includes(busqueda);
+                })
+            } else {
+                productosBuscados = [];
+            }
+            mostrarProductos();
+            cuadroSugerencias.style.display = 'block';
+        }
+
+        function mostrarProductos() {
+            while(cuadroSugerencias.firstChild) {
+                cuadroSugerencias.removeChild(cuadroSugerencias.firstChild);
+            }
+
+            if (productosBuscados.length > 0) {
+                productosBuscados.forEach(producto => {
+                    const productoHTML = document.createElement('DIV');
+                    productoHTML.classList.add('item-sugerencia');
+                    productoHTML.textContent = producto.nombre;
+                    // Llenando de datos al HTML
+                    productoHTML.dataset.productoId = producto.id;
+                    productoHTML.dataset.productoCodigo = producto.codigo;
+                    productoHTML.dataset.productoNombre = producto.nombre;
+                    productoHTML.onclick = seleccionarProducto;
+                    // Añadir al DOM
+                    cuadroSugerencias.appendChild(productoHTML);
+    
+                });
+            }
+        }
+
+        // Mostrar y desaparecer sugerencias
+        document.addEventListener('click', function(e) {
+            const clickSugerencias = cuadroSugerencias.contains(e.target);
+            const clickBusquedaProductos = busquedaProductos.contains(e.target)
+
+            if(clickSugerencias || clickBusquedaProductos) {
+                cuadroSugerencias.style.display = 'block';
+            } else {
+                cuadroSugerencias.style.display = 'none';
+            }
+        });
+
+        function seleccionarProducto(e) {
+            const idProductoInput = document.getElementById('idProducto');
+            const idProductoSeleccionado = e.target.dataset.productoId;
+            const nombreProductoSeleccionado = e.target.dataset.productoNombre;
+            idProductoInput.value = idProductoSeleccionado;
+            productosBuscados = [];
+            busquedaProductos.value = nombreProductoSeleccionado;
+            mostrarProductos();
+        }
+    </script>
+    <script>
+        function confirmaEliminarDetalle(event){
+            event.preventDefault();
+            let form=event.target;
+            
+            Swal.fire({
+                //title: "?",
+                text: "¿Estás seguro de que deseas quitar este producto?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si",
+                cancelButtonText: "No"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+    
+        }
+    </script>
+    <script>
+        function confirmaEliminarDetalles(event){
+            event.preventDefault();
+            let form=event.target;
+            
+            Swal.fire({
+                //title: "?",
+                text: "¿Estás seguro de que deseas quitar todos los productos?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si",
+                cancelButtonText: "No"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+    
+        }
+    </script>
+    <script>
+        function confirmaCancelarVenta(event){
+            event.preventDefault();
+            let form=event.target;
+            
+            Swal.fire({
+                //title: "?",
+                text: "La siguiente acción eliminara la factura ¿Estás seguro de que deseas cancelar la venta?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si",
+                cancelButtonText: "No"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+    
+        }
+    </script>
+    @if (session('msn_error'))
+        <script>
+            let mensaje="{{ session('msn_error') }}";
+            Swal.fire({
+                icon:"error",
+                html: `<span style="font-size: 16px;">${mensaje}</span>`,
+            });
+        </script>
+    @endif
+    @if (session('msn_success'))
+        <script>
+            let mensaje="{{ session('msn_success') }}";
+            Swal.fire({
+                icon:"success",
+                html: `<span style="font-size: 16px;">${mensaje}</span>`,
+            });
+        </script>
+    @endif
 @endsection

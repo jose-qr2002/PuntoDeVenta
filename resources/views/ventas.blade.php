@@ -59,7 +59,7 @@
                 <td>{{ $factura->monto_total }}</td>
                 <td>
                     <!-- Agrega tus botones aquí -->
-                    <button class="btn btn-warning">Ver Factura</button>
+                    <a href="{{ route('detalles.index', $factura->id) }}" class="btn btn-warning">Ver Factura</a>
                 </td>
             </tr>
         @endforeach

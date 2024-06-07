@@ -15,7 +15,7 @@ class FacturaDetalle extends Model
         'producto_id',
         'factura_id',
         'cantidad',
-        'precio_unitario',
+        'precion_unitario',
     ];
 
     public function producto()

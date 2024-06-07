@@ -2,10 +2,10 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Factura;
 use Illuminate\Http\Request;
 use App\utils\LogHelper;
 use App\Models\Cliente;
-use App\Models\Factura;
 use Illuminate\Support\Facades\DB;
 
 class FacturaController extends Controller
@@ -16,10 +16,39 @@ class FacturaController extends Controller
         return view('ventas', compact('facturas'));
     }
 
-    public function generarVenta(Request $request)
+    public function destroyWithDetalles($idFactura) {
+        try {
+            DB::beginTransaction();
+            // Reservando registros
+            $factura = Factura::findOrFail($idFactura);
+            
+            foreach($factura->detalles as $detalle) {
+                $producto = $detalle->producto;
+                // Devolucion de stock
+                $producto->stock = $producto->stock + $detalle->cantidad;
+                $producto->save();
+                // Eliminando detalle
+                $detalle->delete();
+            }
+            // Eliminamos Factura
+            $factura->delete();
+            
+            DB::commit();
+            return redirect()->route('ventas')->with('msn_success', 'Se elimino la factura');
+        } catch (\Exception $e) {
+            DB::rollback();
+            LogHelper::logError($this,$e);
+
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            return redirect()->route('detalles.index', $idFactura)->with('msn_error', $fechaHoraActual.' Ocurrió un error al cancela la factura');
+        }
+    }
+
+    public function generarVenta(Request $request, $idFactura)
     {
-        $cliente = $request->session()->get('cliente');
-        return view('generarVenta', compact('cliente'));
+        $factura = Factura::findOrFail($idFactura);
+        $cliente = $factura->cliente;
+        return view('generarVenta', compact('cliente', 'factura'));
     }
 
     public function create()
@@ -63,7 +92,7 @@ class FacturaController extends Controller
 
             DB::commit();
 
-            return redirect()->route('registrar.venta')->with('msn_success', 'La factura se ha confirmado correctamente.');
+            return redirect()->route('detalles.index', $factura->id)->with('msn_success', 'La factura se ha confirmado correctamente.');
         } catch (\Exception $e) {
             DB::rollBack();
             LogHelper::logError($this, $e);
@@ -73,18 +102,13 @@ class FacturaController extends Controller
         }
     }
 
-    public function generarFactura(Request $request)
+    public function generarFactura(Request $request, $facturaId)
 {
-    $facturaId = $request->session()->get('factura_id');
-
-    if (!$facturaId) {
-        return redirect()->route('factura.create')->with('msn_error', 'No se pudo encontrar la factura.');
-    }
 
     $factura = Factura::find($facturaId);
 
     if (!$factura) {
-        return redirect()->route('factura.create')->with('msn_error', 'No se pudo encontrar la factura.');
+        return redirect()->route('generar.venta')->with('msn_error', 'No se pudo encontrar la factura.');
     }
 
     $factura->metodopago_id = $request->metodopago_id;
@@ -92,10 +116,7 @@ class FacturaController extends Controller
     $factura->estado = 'pagado';
     $factura->save();
 
-    $request->session()->forget('factura_id');
-
     return redirect()->route('ventas')->with('msn_success', 'La factura se ha generado y pagado correctamente.');
 }
-
 
 }
