@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Exceptions\NoStockException;
 use App\Models\Factura;
 use App\Models\FacturaDetalle;
 use App\Models\Producto;
@@ -26,10 +27,13 @@ class FacturaDetalleController extends Controller
         DB::beginTransaction();
 
         try {
+            $factura = Factura::findOrFail($request->factura_id);
             $producto = Producto::findOrFail($request->producto_id);
             $producto->stock = $producto->stock - 1;
             $producto->save();
-            $factura = Factura::findOrFail($request->factura_id);
+            if($producto->stock < 1) {
+                throw new NoStockException("No hay stock disponible para el producto");
+            }
             $facturaDetalle = new FacturaDetalle();
             $facturaDetalle->producto_id = $request->producto_id;
             $facturaDetalle->factura_id = $request->factura_id;
@@ -42,6 +46,11 @@ class FacturaDetalleController extends Controller
 
             DB::commit();
             return redirect()->route('detalles.index', $factura->id)->with('msn_success', 'El Producto se agrego a la factura');
+        } catch (NoStockException $e) {
+            DB::rollBack();
+            LogHelper::logError($this,$e);
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            return redirect()->route('detalles.index', $factura->id)->with('msn_error', $fechaHoraActual.' El producto no tiene stock disponible');
         } catch (UniqueConstraintViolationException $e) {
             DB::rollBack();
             LogHelper::logError($this,$e);
@@ -79,8 +88,11 @@ class FacturaDetalleController extends Controller
             $factura->monto_total = $factura->monto_total + ($request->precion_unitario * $request->cantidad);
             $factura->save();
             // Actualizando stock
-            $producto->stock = $producto->stock + $detalle->cantidad;
             $producto->stock = $producto->stock - $request->cantidad;
+            $producto->stock = $producto->stock + $detalle->cantidad;
+            if($producto->stock < 0) {
+                throw new NoStockException("No hay stock disponible para el producto");
+            }
             $producto->save();
             // Actualizando detalle
             $detalle->precion_unitario = $request->precion_unitario;
@@ -88,7 +100,11 @@ class FacturaDetalleController extends Controller
             $detalle->save();
             DB::commit();
             return redirect()->route('detalles.index', $factura->id)->with('msn_success', 'El Detalle se actualizo correctamente');
-
+        } catch (NoStockException $e) {
+            DB::rollBack();
+            LogHelper::logError($this,$e);
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            return redirect()->route('detalles.index', $factura->id)->with('msn_error', $fechaHoraActual.' El producto no tiene stock disponible');
         } catch (\Exception $e) {
             DB::rollBack();
             LogHelper::logError($this,$e);
