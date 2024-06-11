@@ -117,7 +117,7 @@
                             <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="#">INVENTARIO</a>
                         </li>
                         <li class="">
-                            <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="#">PROVEEDORES</a>
+                            <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="{{ route('proveedores.index') }}">PROVEEDORES</a>
                         </li>
                     </ul>
                     <a class="btn sidebar__enlace btn-volver text-white" href="">Volver</a>
