@@ -4,6 +4,7 @@ use App\Http\Controllers\ClienteController;
 use App\Http\Controllers\FacturaController;
 use App\Http\Controllers\FacturaDetalleController;
 use App\Http\Controllers\ProductoController;
+use App\Http\Controllers\ProveedorController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', function () { return view('dashboard'); })->name('dashboard');
@@ -40,3 +41,5 @@ Route::post('/factura/store', [FacturaController::class, 'store'])->name('factur
 
 Route::get('/generar/{idFactura}', [FacturaController::class, 'generarVenta'])->name('generar.venta');
 Route::post('/factura/generar/{idFactura}', [FacturaController::class, 'generarFactura'])->name('factura.generar');
+
+Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedores.index');
