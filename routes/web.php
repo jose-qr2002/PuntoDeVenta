@@ -43,3 +43,5 @@ Route::get('/generar/{idFactura}', [FacturaController::class, 'generarVenta'])->
 Route::post('/factura/generar/{idFactura}', [FacturaController::class, 'generarFactura'])->name('factura.generar');
 
 Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedores.index');
+Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');
+Route::post('/proveedores/store', [ProveedorController::class, 'store'])->name('proveedores.store');
