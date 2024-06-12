@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\Proveedor;
+use App\Utils\LogHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -57,4 +58,21 @@ class ProveedorController extends Controller
             return redirect()->route('proveedores.create')->with('msn_error', $fechaHoraActual.' Ocurrió un error al registrar el proveedor.');
         }
     }
+
+    public function destroy($id) {
+        try {
+            DB::beginTransaction();
+            $proveedor = Proveedor::findOrFail($id);
+            $proveedor->delete();
+            DB::commit();
+            return redirect()->route('proveedores.index')->with('msn_success', 'Proveedor eliminado exitosamente');
+        } catch (\Exception $e) {
+            DB::rollback();
+            LogHelper::logError($this, $e);
+    
+            $fechaHoraActual = date("Y-m-d H:i:s");
+            return redirect()->route('proveedores.index')->with('msn_error', $fechaHoraActual.' Ocurrió un error al eliminar el proveedor.');
+        }
+    }
+    
 }
