@@ -141,7 +141,7 @@ public function test_proveedor_store_exception(): void
     ]);
 
     $response->assertStatus(302);
-    $response->assertSessionHas('error');
+    $response->assertSessionHas('msn_error');
 }
 
 

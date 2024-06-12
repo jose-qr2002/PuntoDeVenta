@@ -56,9 +56,9 @@
             </ul>
         </nav>
     </div>
-@if(session('success'))
+@if(session('msn_success'))
         <script>
-            let mensaje="{{ session('success') }}";
+            let mensaje="{{ session('msn_success') }}";
 
             Swal.fire({
                 icon:"success",

@@ -82,11 +82,16 @@
                         </div>
                         <div class="form-group mt-3">
                             <label for="estado">Estado</label>
-                            <input type="text" class="form-control" name="estado" id="estado" placeholder="Ingrese el estado" value="{{ old('estado') }}">
+                            <select class="form-control" name="estado" id="estado">
+                                <option value="" disabled selected>Seleccione el estado</option>
+                                <option value="Activo" {{ old('estado') == 'Activo' ? 'selected' : '' }}>Activo</option>
+                                <option value="Inactivo" {{ old('estado') == 'Inactivo' ? 'selected' : '' }}>Inactivo</option>
+                            </select>
                             @error('estado')
                                 <div class="alert alert-danger mt-3">{{ $message }}</div>
                             @enderror
                         </div>
+
                         <div class="form-group mt-4 text-center">
                             <button type="submit" class="btn btn-primary">Agregar</button>
                         </div>
@@ -97,9 +102,9 @@
     </div>
 </div>
 
-@if (session('error'))
+@if (session('msn_error'))
     <script>
-        let mensaje="{{ session('error') }}";
+        let mensaje="{{ session('msn_error') }}";
         Swal.fire({
             icon:"error",
             html: `<span style="font-size: 16px;">${mensaje}</span>`,

@@ -48,13 +48,13 @@ class ProveedorController extends Controller
 
             DB::commit();
         
-            return redirect()->route('proveedores.index')->with('success', 'Proveedor registrado exitosamente.');
+            return redirect()->route('proveedores.index')->with('msn_success', 'Proveedor registrado exitosamente.');
         } catch (\Exception $e) {
             DB::rollBack();
             Log::error('Error al registrar el proveedor: '.$e->getMessage());
 
             $fechaHoraActual = date("Y-m-d H:i:s");
-            return redirect()->route('proveedores.create')->with('error', $fechaHoraActual.' Ocurrió un error al registrar el proveedor.');
+            return redirect()->route('proveedores.create')->with('msn_error', $fechaHoraActual.' Ocurrió un error al registrar el proveedor.');
         }
     }
 }
