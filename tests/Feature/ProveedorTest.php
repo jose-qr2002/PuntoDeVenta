@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\Proveedor;
 
 class ProveedorTest extends TestCase
 {
@@ -144,6 +145,24 @@ public function test_proveedor_store_exception(): void
     $response->assertSessionHas('msn_error');
 }
 
+public function test_proveedor_destroy_succes():void
+{
+    $proveedor = Proveedor::findOrFail(1);
+    $response = $this->delete(route('proveedores.destroy', $proveedor->id));
+    $response->assertStatus(302);
+    $response->assertRedirect(route('proveedores.index'));
+    $this->assertDatabaseMissing('proveedores', $proveedor->toArray());
+}
+
+public function test_proveedor_destroy_exception(): void
+{
+    $response = $this->delete(route('proveedores.destroy', 99999999));
+    $response->assertStatus(302);
+    $response->assertRedirect(route('proveedores.index'));
+    $this->assertNotNull(session('msn_error'));
+}
 
 
 }
+
+
