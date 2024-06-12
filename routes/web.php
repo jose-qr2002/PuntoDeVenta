@@ -45,3 +45,5 @@ Route::post('/factura/generar/{idFactura}', [FacturaController::class, 'generarF
 Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedores.index');
 Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');
 Route::post('/proveedores/store', [ProveedorController::class, 'store'])->name('proveedores.store');
+
+Route::delete('/proveedores/delete/{idProveedor}', [ProveedorController::class, 'destroy'])->name('proveedores.destroy');
