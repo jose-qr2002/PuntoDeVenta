@@ -38,7 +38,11 @@
                         <td>{{ $proveedor->telefono }}</td>
                         <td>{{ $proveedor->correo }}</td>
                         <td>
-
+                            <form onsubmit="window.confirmaEliminarCliente(event)" action="{{ route('proveedores.destroy', $proveedor->id) }}" method="POST">
+                                @csrf
+                                @method('DELETE')
+                                <button type="submit" class="btn btn-danger">Eliminar</button>
+                            </form>
                         </td>
                     </tr>
                 @endforeach
@@ -65,5 +69,42 @@
                 html: `<span style="font-size: 16px;">${mensaje}</span>`,
             });
         </script>
-    @endif
+@endif
+
+
+@if(session('msn_error'))
+        <script>
+            let mensaje="{{ session('msn_error') }}";
+            Swal.fire({
+                icon:"error",
+                html: `<span style="font-size: 16px;">${mensaje}</span>`,
+            });
+        </script>
+@endif
+
+
+
+<script>
+        function confirmaEliminarCliente(event){
+            event.preventDefault();
+            let form=event.target;
+            
+            Swal.fire({
+                //title: "?",
+                text: "¿Estás seguro de que deseas eliminar este cliente?",
+                icon: "question",
+                showCancelButton: true,
+                confirmButtonColor: "#3085d6",
+                cancelButtonColor: "#d33",
+                confirmButtonText: "Si",
+                cancelButtonText: "No"
+            }).then((result) => {
+                if (result.isConfirmed) {
+                    form.submit();
+                }
+            });
+    
+        }
+</script>
+
 @endsection
