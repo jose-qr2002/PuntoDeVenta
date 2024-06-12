@@ -9,7 +9,7 @@
 @section('contenidoprincipal')
     <h1 class="text-center mt-5 animate__animated animate__fadeInRight">Proveedores</h1>
     <div class="controls d-flex flex-column gap-4 flex-md-row align-items-md-center justify-content-md-between animate__animated animate__fadeInRight">
-        <a href="{{ route('productos.create') }}" class="btn btn-primary d-block">
+        <a href="{{ route('proveedores.create') }}" class="btn btn-primary d-block">
             Registrar Proveedor
         </a>
         <div class="input-group mb-3 mb-md-0 w-auto">
@@ -56,4 +56,14 @@
             </ul>
         </nav>
     </div>
+@if(session('success'))
+        <script>
+            let mensaje="{{ session('success') }}";
+
+            Swal.fire({
+                icon:"success",
+                html: `<span style="font-size: 16px;">${mensaje}</span>`,
+            });
+        </script>
+    @endif
 @endsection
