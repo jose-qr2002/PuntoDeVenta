@@ -11,4 +11,9 @@ class ProveedorController extends Controller
         $proveedores = Proveedor::all();
         return view('proveedores.index', compact('proveedores'));
     }
+
+    public function edit($id) {
+        $proveedor = Proveedor::findOrFail($id);
+        return view('proveedores.edit', compact('proveedor'));
+    }
 }
