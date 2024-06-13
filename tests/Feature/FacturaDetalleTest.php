@@ -5,6 +5,7 @@ namespace Tests\Feature;
 use App\Models\Factura;
 use App\Models\FacturaDetalle;
 use App\Models\Producto;
+use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
@@ -15,6 +16,8 @@ class FacturaDetalleTest extends TestCase
 
     public function test_factura_detalle_success(): void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
         // Crear producto de prueba
         $producto = Producto::findOrFail(6);
 
@@ -54,6 +57,8 @@ class FacturaDetalleTest extends TestCase
 
     public function test_factura_detalle_validation(): void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
         // Crear producto de prueba
         $producto = Producto::findOrFail(6);
 
@@ -73,6 +78,8 @@ class FacturaDetalleTest extends TestCase
 
     public function test_factura_detalle_exception(): void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
         // Crear producto de prueba
         $producto = Producto::findOrFail(6);
 
@@ -90,6 +97,8 @@ class FacturaDetalleTest extends TestCase
 
     public function test_factura_detalle_update(): void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
         // Crear factura de prueba
         $detalle = FacturaDetalle::findOrFail(1);
 
@@ -113,6 +122,8 @@ class FacturaDetalleTest extends TestCase
 
     public function test_factura_detalle_update_validation(): void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
         // Crear factura de prueba
         $detalle = FacturaDetalle::findOrFail(1);
 
@@ -130,6 +141,8 @@ class FacturaDetalleTest extends TestCase
 
     public function test_factura_detalle_update_exception(): void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
         // Crear factura de prueba
         $detalle = FacturaDetalle::findOrFail(1);
 
@@ -143,6 +156,9 @@ class FacturaDetalleTest extends TestCase
     }
 
     public function test_factura_detalle_destroy_success() {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
         $detalle = FacturaDetalle::findOrFail(1);
         $response = $this->delete(route('detalles.destroy',1));
         $response->assertStatus(302);

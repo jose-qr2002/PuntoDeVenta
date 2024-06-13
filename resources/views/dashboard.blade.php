@@ -4,8 +4,8 @@
 {{-- En caso de usar el menu usar la seccion codigocabeceraprincipal para los estilos--}}
 @section('codigocabeceraprincipal')
     <style>
-        li > p{
-            margin-bottom: 0
+        li > p {
+            margin-bottom: 0;
         }
     </style>
 @endsection
@@ -15,6 +15,7 @@
         Dashboard
     </h1>
     <div class="row g-3 animate__animated animate__fadeInRight">
+        {{-- Contenido de dashboard --}}
         <div class="col-12 col-sm-6 col-lg-3">
             <div class="card bg-warning bg-gradient bg-opacity-75 text-white">
                 <div class="card-header text-center font-bold fw-semibold">
@@ -79,7 +80,7 @@
         <div class="col-12 col-lg-6">
             <div class="card">
                 <div class="card-header bg-dark text-white bg-opacity-75 text-center fw-bold">
-                  Productos mas vendidos
+                  Productos más vendidos
                 </div>
                 <ul class="list-group list-group-flush">
                     <li class="list-group-item d-flex justify-content-between">
@@ -87,15 +88,15 @@
                         <p class="text-success fw-semibold">S/3</p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
-                        <p class="fw-semibold">2. Taladro Electrico</p>
+                        <p class="fw-semibold">2. Taladro Eléctrico</p>
                         <p class="text-success fw-semibold">S/30</p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
-                        <p class="fw-semibold">3. Cinta Metrica</p>
+                        <p class="fw-semibold">3. Cinta Métrica</p>
                         <p class="text-success fw-semibold">S/7</p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
-                        <p class="fw-semibold">4. Sierra Electrica</p>
+                        <p class="fw-semibold">4. Sierra Eléctrica</p>
                         <p class="text-success fw-semibold">S/79</p>
                     </li>
                     <li class="list-group-item d-flex justify-content-between">
@@ -143,5 +144,17 @@
             </div>
         </div>
     </div>
-@endsection
 
+@if(session('msn_success'))
+        <script>
+            let mensaje="{{ session('msn_success') }}";
+
+            Swal.fire({
+                icon:"success",
+                html: `<span style="font-size: 16px;">${mensaje}</span>`,
+            });
+        </script>
+    @endif
+
+
+@endsection

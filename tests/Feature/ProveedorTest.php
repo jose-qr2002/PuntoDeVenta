@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Proveedor;
+use App\Models\User;
 
 class ProveedorTest extends TestCase
 {
@@ -15,6 +16,9 @@ class ProveedorTest extends TestCase
     use RefreshDatabase;
     public function test_example(): void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
         $response = $this->get('/');
 
         $response->assertStatus(200);
@@ -22,6 +26,9 @@ class ProveedorTest extends TestCase
 
     public function test_proveedor_store_succes(): void
 {
+    $user = User::findOrFail(1);
+    $this->actingAs($user);
+
     $proveedorData = [
         'ruc' => '1234567890123',
         'razon_social' => 'proveedor vientito de la rosa',
@@ -54,6 +61,9 @@ class ProveedorTest extends TestCase
 
 public function test_proveedor_store_validation(): void
 {
+    $user = User::findOrFail(1);
+    $this->actingAs($user);
+
     $proveedorData = [
         'ruc' => '',
         'razon_social' => '',
@@ -109,6 +119,9 @@ public function test_proveedor_store_validation(): void
 
 public function test_proveedor_store_exception(): void
 {
+    $user = User::findOrFail(1);
+    $this->actingAs($user);
+
     $correo = "";
     for ($i = 0; $i < 255; $i++) { 
         $correo .= 'a';
@@ -147,6 +160,9 @@ public function test_proveedor_store_exception(): void
 
 public function test_proveedor_destroy_succes():void
 {
+    $user = User::findOrFail(1);
+    $this->actingAs($user);
+
     $proveedor = Proveedor::findOrFail(1);
     $response = $this->delete(route('proveedores.destroy', $proveedor->id));
     $response->assertStatus(302);
@@ -156,6 +172,9 @@ public function test_proveedor_destroy_succes():void
 
 public function test_proveedor_destroy_exception(): void
 {
+    $user = User::findOrFail(1);
+    $this->actingAs($user);
+
     $response = $this->delete(route('proveedores.destroy', 99999999));
     $response->assertStatus(302);
     $response->assertRedirect(route('proveedores.index'));

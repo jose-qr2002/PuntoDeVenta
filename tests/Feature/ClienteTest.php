@@ -6,6 +6,7 @@ use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Cliente;
+use App\Models\User;
 
 class ClienteTest extends TestCase
 {
@@ -15,6 +16,9 @@ class ClienteTest extends TestCase
     use RefreshDatabase;
     public function test_example(): void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
         $response = $this->get('/');
 
         $response->assertStatus(200);
@@ -22,6 +26,9 @@ class ClienteTest extends TestCase
 
     public function test_cliente_create():void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
         $clienteData = [
             'dni' => '66666666',
             'nombres' => 'Juan',
@@ -48,6 +55,9 @@ class ClienteTest extends TestCase
 
     public function test_cliente_create_validation(): void
 {
+    $user = User::findOrFail(1);
+    $this->actingAs($user);
+
     $clienteData = [
         'dni' => '',
         'nombres' => '',
@@ -102,6 +112,8 @@ class ClienteTest extends TestCase
 
 public function test_cliente_create_exception(): void
 {
+    $user = User::findOrFail(1);
+    $this->actingAs($user);
 
     $nombrel = "";
     for($i =0; $i <255;$i++){
@@ -125,6 +137,9 @@ public function test_cliente_create_exception(): void
     
     public function test_cliente_update_success():void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
         $cliente = Cliente::findOrFail(1);
 
         $clienteData = [
@@ -151,6 +166,9 @@ public function test_cliente_create_exception(): void
 
     public function test_cliente_update_validation():void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
         $cliente = Cliente::findOrFail(1);
 
         $dataWithoutValors = [
@@ -203,6 +221,9 @@ public function test_cliente_create_exception(): void
     }
 
     public function test_cliente_update_exception() {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
         $cliente = Cliente::findOrFail(1);
 
         $nombre = 'Lique';
@@ -242,6 +263,9 @@ public function test_cliente_create_exception(): void
 
     public function test_cliente_destroy_succes():void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
         $cliente = Cliente::findOrFail(1);
         $response = $this->delete(route('clientes.destroy',$cliente->id));
         $response->assertStatus(302);
@@ -251,6 +275,9 @@ public function test_cliente_create_exception(): void
 
     public function test_cliente_destroy_exception():void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
         $response = $this->delete(route('clientes.destroy',99999999));
         $response->assertStatus(302);
         $response->assertRedirect(route('clientes.index'));
