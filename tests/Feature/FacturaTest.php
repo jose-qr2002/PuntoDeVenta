@@ -7,6 +7,7 @@ use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 use App\Models\Cliente;
 use App\Models\Factura;
+use App\Models\User;
 
 class FacturaTest extends TestCase
 {
@@ -14,6 +15,9 @@ class FacturaTest extends TestCase
 
     public function test_example_factura(): void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
         $response = $this->get('/');
 
         $response->assertStatus(200);
@@ -21,6 +25,9 @@ class FacturaTest extends TestCase
 
     public function test_factura_create_success(): void
 {
+    $user = User::findOrFail(1);
+    $this->actingAs($user);
+
     $clienteId = 10;
 
     $facturaData = [
@@ -47,6 +54,9 @@ class FacturaTest extends TestCase
 
 public function test_factura_create_validation(): void
 {
+    $user = User::findOrFail(1);
+    $this->actingAs($user);
+
     $facturaData = [
         'fecha' => now()->toDateString(),
         'estado' => 'pendiente',
@@ -60,6 +70,9 @@ public function test_factura_create_validation(): void
 
 public function test_generar_factura_success(): void
 {
+    $user = User::findOrFail(1);
+    $this->actingAs($user);
+
     $data = [
         'metodopago_id' => 1, 
     ];
