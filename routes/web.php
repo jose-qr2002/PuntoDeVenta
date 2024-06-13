@@ -44,3 +44,4 @@ Route::post('/factura/generar/{idFactura}', [FacturaController::class, 'generarF
 
 Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedores.index');
 Route::get('/proveedores/edit/{idProveedor}', [ProveedorController::class, 'edit'])->name('proveedores.edit');
+Route::put('/proveedores/update/{idProveedor}', [ProveedorController::class, 'update'])->name('proveedores.update');

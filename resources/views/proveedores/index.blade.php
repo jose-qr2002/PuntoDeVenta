@@ -56,4 +56,13 @@
             </ul>
         </nav>
     </div>
+    @if (session('msn_success'))
+    <script>
+        let mensaje="{{ session('msn_success') }}";
+        Swal.fire({
+            icon:"success",
+            html: `<span style="font-size: 16px;">${mensaje}</span>`,
+        });
+    </script>
+@endif
 @endsection

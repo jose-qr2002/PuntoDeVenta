@@ -18,8 +18,9 @@
     <h2 class="text-center mb-3">Editar Proveedor</h2>
     <div class="card shadow-sm">
         <div class="card-body">
-            <form action="" method="POST" novalidate class="mb-3">
+            <form action="{{ route('proveedores.update', $proveedor->id) }}" method="POST" novalidate class="mb-3">
                 @csrf
+                @method('PUT')
                 <div class="row">
                     <div class="col-12 col-lg-6">
                         <div class="form-group">
