@@ -1,7 +1,8 @@
 @extends('cabecera')
+
 @section('codigocabecera')
     <style>
-        .btn-volver {
+        .btn-logout {
             position: absolute;
             bottom: 8%;
             left: 50%;
@@ -77,7 +78,7 @@
         }
 
         @media (max-height: 540px) {
-            .btn-volver {
+            .btn-logout {
                 position: static;
                 transform: translateX(0);
             }
@@ -120,7 +121,10 @@
                             <a class="mt-3 btn w-100 border border-secondary rounded sidebar__enlace text-white" href="{{ route('proveedores.index') }}">PROVEEDORES</a>
                         </li>
                     </ul>
-                    <a class="btn sidebar__enlace btn-volver text-white" href="">Volver</a>
+                    <form action="{{ route('logout') }}" method="POST">
+                        @csrf
+                        <button type="submit" class="btn sidebar__enlace btn-logout text-white">Logout</button>
+                    </form>
                 </nav>
             </div>
             <div class="contenido-principal w-100">

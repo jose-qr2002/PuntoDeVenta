@@ -2,16 +2,155 @@
 
 namespace Tests\Feature;
 
+use App\Models\User;
 use App\Models\Proveedor;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
 
+
 class ProveedorTest extends TestCase
 {
     use RefreshDatabase;
+    public function test_proveedor_store_succes(): void
+    {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+    
+        $proveedorData = [
+            'ruc' => '1234567890123',
+            'razon_social' => 'proveedor vientito de la rosa',
+            'telefono' => '666666666',
+            'correo' => 'proveedor@holis.com',
+            'direccion' => 'calle holiwis 666',
+            'ciudad' => 'ciudad de los holis',
+            'provincia' => 'provincia de tangamandapio',
+            'codigo_postal' => '12345',
+            'estado' => 'Activo',
+        ];
+    
+        $response = $this->post(route('proveedores.store'), $proveedorData);
+    
+        $response->assertStatus(302);
+    
+        $this->assertDatabaseHas('proveedores', [
+            'ruc' => '1234567890123',
+            'razon_social' => 'proveedor vientito de la rosa',
+            'telefono' => '666666666',
+            'correo' => 'proveedor@holis.com',
+            'direccion' => 'calle holiwis 666',
+            'ciudad' => 'ciudad de los holis',
+            'provincia' => 'provincia de tangamandapio',
+            'codigo_postal' => '12345',
+            'estado' => 'Activo',
+        ]);
+        $response->assertRedirect(route('proveedores.index'));
+    }
+    
+    public function test_proveedor_store_validation(): void
+    {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+    
+        $proveedorData = [
+            'ruc' => '',
+            'razon_social' => '',
+            'telefono' => '',
+            'correo' => '',
+            'direccion' => '',
+            'ciudad' => '',
+            'provincia' => '',
+            'codigo_postal' => '',
+            'estado' => '',
+        ];
+    
+        $response = $this->post(route('proveedores.store'), $proveedorData);
+    
+        $response->assertStatus(302);
+    
+        $response->assertSessionHasErrors([
+            'ruc',
+            'razon_social',
+            'telefono',
+            'correo',
+            'direccion',
+            'ciudad',
+            'provincia',
+            'codigo_postal',
+            'estado',
+        ]);
+    
+        $correosInvalidos = ['holiwis', 'holis.com', '@holis.com'];
+    
+        foreach ($correosInvalidos as $correo) {
+            $proveedorData['correo'] = $correo;
+    
+            $response = $this->post(route('proveedores.store'), $proveedorData);
+    
+            $response->assertStatus(302);
+    
+            $response->assertSessionHasErrors('correo');
+        }
+    
+        $codigoPostalInvalido = ['holiwis', '123456'];
+    
+        foreach ($codigoPostalInvalido as $codigo) {
+            $proveedorData['codigo_postal'] = $codigo;
+    
+            $response = $this->post(route('proveedores.store'), $proveedorData);
+    
+            $response->assertStatus(302);
+    
+            $response->assertSessionHasErrors('codigo_postal');
+        }
+    }
+    
+    public function test_proveedor_store_exception(): void
+    {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+    
+        $correo = "";
+        for ($i = 0; $i < 255; $i++) { 
+            $correo .= 'a';
+        }
+        $razon = "";
+        for ($i = 0; $i < 255; $i++) { 
+            $razon .= 'b';
+        }
+        $direccion = "";
+        for ($i = 0; $i < 255; $i++) { 
+            $direccion .= 'c';
+        }
+        $ciudad = "";
+        for ($i = 0; $i < 255; $i++) { 
+            $ciudad .= 'd';
+        }
+        $provincia = "";
+        for ($i = 0; $i < 255; $i++) { 
+            $provincia .= 'holiwis';
+        }
+        $response = $this->post(route('proveedores.store'), [
+            'ruc' => '1234567890123',
+            'razon_social' => $razon,
+            'telefono' => '123456789',
+            'correo' => $correo . '@holis.com',
+            'direccion' => $direccion,
+            'ciudad' => $ciudad,
+            'provincia' => $provincia,
+            'codigo_postal' => '12345',
+            'estado' => 'Activo',
+        ]);
+    
+        $response->assertStatus(302);
+        $response->assertSessionHas('msn_error');
+    }
+
+
     public function test_proveedor_update_success(): void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
         $proveedor = Proveedor::findOrFail(1);
 
         $proveedorData = [
@@ -41,6 +180,8 @@ class ProveedorTest extends TestCase
 
     public function test_proveedor_update_validation(): void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
         $proveedor = Proveedor::findOrFail(1);
 
         $dataWithoutValues = [
@@ -106,6 +247,8 @@ class ProveedorTest extends TestCase
 
     public function test_proveedor_update_exception(): void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
         $proveedor = Proveedor::findOrFail(1);
 
         $direccion = str_repeat('Nuevo Ilo', 256);
@@ -136,4 +279,26 @@ class ProveedorTest extends TestCase
         $response->assertSessionHas('msn_error');
     }
 
+    public function test_proveedor_destroy_succes():void
+    {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
+        $proveedor = Proveedor::findOrFail(1);
+        $response = $this->delete(route('proveedores.destroy', $proveedor->id));
+        $response->assertStatus(302);
+        $response->assertRedirect(route('proveedores.index'));
+        $this->assertDatabaseMissing('proveedores', $proveedor->toArray());
+    }
+
+    public function test_proveedor_destroy_exception(): void
+    {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
+        $response = $this->delete(route('proveedores.destroy', 99999999));
+        $response->assertStatus(302);
+        $response->assertRedirect(route('proveedores.index'));
+        $this->assertNotNull(session('msn_error'));
+    }
 }

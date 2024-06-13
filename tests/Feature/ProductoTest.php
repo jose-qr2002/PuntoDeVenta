@@ -6,6 +6,7 @@ use App\Models\Producto;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Illuminate\Foundation\Testing\WithFaker;
 use Tests\TestCase;
+use App\Models\User;
 
 class ProductoTest extends TestCase
 {
@@ -15,6 +16,9 @@ class ProductoTest extends TestCase
     use RefreshDatabase;
     public function test_producto_index(): void
     {
+    $user = User::findOrFail(1);
+    $this->actingAs($user);
+        
     $response = $this->get(route('productos.index'));
     $response->assertStatus(200);
     }
@@ -22,6 +26,8 @@ class ProductoTest extends TestCase
 
     public function test_producto_create(): void
     {
+    $user = User::findOrFail(1);
+    $this->actingAs($user);
 
     $productoData = [
         'codigo' => '841941000036',
@@ -52,6 +58,9 @@ class ProductoTest extends TestCase
 
     public function test_producto_create_validation(): void
 {
+    $user = User::findOrFail(1);
+    $this->actingAs($user);
+
     $productoData = [
         'nombre' => '',
         'stock' => '',
@@ -88,6 +97,9 @@ class ProductoTest extends TestCase
 
 public function test_producto_create_exception(): void
 {
+    $user = User::findOrFail(1);
+    $this->actingAs($user);
+
     $productoData = [
         'codigo' => '123546464624',
         'nombre' => 'maletin',
@@ -108,6 +120,9 @@ public function test_producto_create_exception(): void
 
     public function test_producto_update():void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
         $producto = Producto::findOrFail(1); // Obtiene el registro de Martillo
         $productoData = [
             'codigo' => $producto->codigo,
@@ -133,6 +148,9 @@ public function test_producto_create_exception(): void
 
     public function test_producto_update_validation():void 
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
         $producto = Producto::findOrFail(1); // Obtiene el registro de Martillo
         $dataProductoErrors = [
             [
@@ -181,6 +199,9 @@ public function test_producto_create_exception(): void
 
     public function test_producto_update_exception():void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
         $producto = Producto::findOrFail(1); // Obtiene el registro de Martillo
         // Preparando el dato nombre
         $nombre = '';
@@ -219,6 +240,9 @@ public function test_producto_create_exception(): void
 
     public function test_producto_delete():void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
         $producto = Producto::findOrFail(1);
         $response = $this->delete(route('productos.destroy',$producto->id));
         $response->assertStatus(302);
@@ -227,6 +251,9 @@ public function test_producto_create_exception(): void
 
     public function test_producto_delete_exception():void
     {
+        $user = User::findOrFail(1);
+        $this->actingAs($user);
+
         $response = $this->delete(route('productos.destroy', 500000));
         $response->assertStatus(302);
         $response->assertRedirect(route('productos.index'));
