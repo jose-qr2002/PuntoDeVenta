@@ -38,7 +38,7 @@
                         <td>{{ $proveedor->telefono }}</td>
                         <td>{{ $proveedor->correo }}</td>
                         <td>
-
+                            <a class="btn btn-warning" href="{{ route('proveedores.edit', $proveedor->id) }}">Editar</a>
                         </td>
                     </tr>
                 @endforeach

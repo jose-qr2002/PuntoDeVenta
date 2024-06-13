@@ -14,7 +14,7 @@
     </div>
 </div>
 
-<div class="container animate__animated animate__fadeInUp" style="max-width: 800px;">
+<div class="container mb-4 animate__animated animate__fadeInUp" style="max-width: 800px;">
     <h2 class="text-center mb-3">Editar Proveedor</h2>
     <div class="card shadow-sm">
         <div class="card-body">
@@ -24,7 +24,7 @@
                     <div class="col-12 col-lg-6">
                         <div class="form-group">
                             <label for="ruc">RUC</label>
-                            <input type="text" class="form-control" name="ruc" id="ruc" placeholder="Ingrese el RUC" value="{{ old('ruc') }}">
+                            <input type="text" class="form-control" name="ruc" id="ruc" placeholder="Ingrese el RUC" value="{{ old('ruc', $proveedor->ruc) }}">
                             @error('ruc')
                                 <div class="alert alert-danger mt-3">{{ $message }}</div>
                             @enderror
@@ -33,7 +33,7 @@
                     <div class="col-12 col-lg-6">
                         <div class="form-group">
                             <label for="razon_social">Razón Social</label>
-                            <input type="text" class="form-control" name="razon_social" id="razon_social" placeholder="Ingrese la razón social" value="{{ old('razon_social') }}">
+                            <input type="text" class="form-control" name="razon_social" id="razon_social" placeholder="Ingrese la razón social" value="{{ old('razon_social', $proveedor->razon_social) }}">
                             @error('razon_social')
                                 <div class="alert alert-danger mt-3">{{ $message }}</div>
                             @enderror
@@ -44,7 +44,7 @@
                     <div class="col col-lg-6">
                         <div class="form-group mt-3">
                             <label for="telefono">Teléfono</label>
-                            <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Ingrese el teléfono" value="{{ old('telefono') }}">
+                            <input type="text" class="form-control" name="telefono" id="telefono" placeholder="Ingrese el teléfono" value="{{ old('telefono', $proveedor->telefono) }}">
                             @error('telefono')
                                 <div class="alert alert-danger mt-3">{{ $message }}</div>
                             @enderror
@@ -53,7 +53,7 @@
                     <div class="col col-lg-6">
                         <div class="form-group mt-3">
                             <label for="correo">Correo</label>
-                            <input type="email" class="form-control" name="correo" id="correo" placeholder="Ingrese el correo electrónico" value="{{ old('correo') }}">
+                            <input type="email" class="form-control" name="correo" id="correo" placeholder="Ingrese el correo electrónico" value="{{ old('correo', $proveedor->correo) }}">
                             @error('correo')
                                 <div class="alert alert-danger mt-3">{{ $message }}</div>
                             @enderror
@@ -62,7 +62,7 @@
                 </div>
                 <div class="form-group mt-3">
                     <label for="direccion">Dirección</label>
-                    <input type="text" class="form-control" name="direccion" id="direccion" placeholder="Ingrese la dirección" value="{{ old('direccion') }}">
+                    <input type="text" class="form-control" name="direccion" id="direccion" placeholder="Ingrese la dirección" value="{{ old('direccion', $proveedor->direccion) }}">
                     @error('direccion')
                         <div class="alert alert-danger mt-3">{{ $message }}</div>
                     @enderror
@@ -71,7 +71,7 @@
                     <div class="col col-lg-6">
                         <div class="form-group mt-3">
                             <label for="ciudad">Ciudad</label>
-                            <input type="text" class="form-control" name="ciudad" id="ciudad" placeholder="Ingrese la ciudad" value="{{ old('ciudad') }}">
+                            <input type="text" class="form-control" name="ciudad" id="ciudad" placeholder="Ingrese la ciudad" value="{{ old('ciudad', $proveedor->ciudad) }}">
                             @error('ciudad')
                                 <div class="alert alert-danger mt-3">{{ $message }}</div>
                             @enderror
@@ -80,7 +80,7 @@
                     <div class="col col-lg-6">
                         <div class="form-group mt-3">
                             <label for="provincia">Provincia</label>
-                            <input type="text" class="form-control" name="provincia" id="provincia" placeholder="Ingrese la provincia" value="{{ old('provincia') }}">
+                            <input type="text" class="form-control" name="provincia" id="provincia" placeholder="Ingrese la provincia" value="{{ old('provincia', $proveedor->provincia) }}">
                             @error('provincia')
                                 <div class="alert alert-danger mt-3">{{ $message }}</div>
                             @enderror
@@ -91,7 +91,7 @@
                     <div class="col col-lg-6">
                         <div class="form-group mt-3">
                             <label for="codigo_postal">Código Postal</label>
-                            <input type="text" class="form-control" name="codigo_postal" id="codigo_postal" placeholder="Ingrese el código postal" value="{{ old('codigo_postal') }}">
+                            <input type="text" class="form-control" name="codigo_postal" id="codigo_postal" placeholder="Ingrese el código postal" value="{{ old('codigo_postal', $proveedor->codigo_postal) }}">
                             @error('codigo_postal')
                                 <div class="alert alert-danger mt-3">{{ $message }}</div>
                             @enderror
@@ -102,8 +102,8 @@
                             <label for="estado">Estado</label>
                             <select class="form-control" name="estado" id="estado">
                                 <option value="" disabled selected>Seleccione el estado</option>
-                                <option value="Activo" {{ old('estado') == 'Activo' ? 'selected' : '' }}>Activo</option>
-                                <option value="Inactivo" {{ old('estado') == 'Inactivo' ? 'selected' : '' }}>Inactivo</option>
+                                <option value="activo" {{ old('estado', $proveedor->estado) == 'activo' ? 'selected' : '' }}>Activo</option>
+                                <option value="inactivo" {{ old('estado', $proveedor->estado) == 'inactivo' ? 'selected' : '' }}>Inactivo</option>
                             </select>
                             @error('estado')
                                 <div class="alert alert-danger mt-3">{{ $message }}</div>
