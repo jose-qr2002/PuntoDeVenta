@@ -38,7 +38,8 @@
                         <td>{{ $proveedor->telefono }}</td>
                         <td>{{ $proveedor->correo }}</td>
                         <td>
-                            <form onsubmit="window.confirmaEliminarCliente(event)" action="{{ route('proveedores.destroy', $proveedor->id) }}" method="POST">
+                            <a class="btn btn-warning" href="{{ route('proveedores.edit', $proveedor->id) }}">Editar</a>
+                            <form onsubmit="window.confirmaEliminarCliente(event)" action="{{ route('proveedores.destroy', $proveedor->id) }}" method="POST" style="display: inline-block;">
                                 @csrf
                                 @method('DELETE')
                                 <button type="submit" class="btn btn-danger">Eliminar</button>

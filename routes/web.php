@@ -48,13 +48,14 @@ Route::group(['middleware' => ['auth']], function () {
     Route::get('/aVenta', [FacturaController::class, 'index'])->name('atender.venta');
     Route::post('/buscar-cliente', [FacturaController::class, 'buscarCliente'])->name('buscar.cliente');
     Route::post('/factura/store', [FacturaController::class, 'store'])->name('factura.store');
-
     Route::get('/generar/{idFactura}', [FacturaController::class, 'generarVenta'])->name('generar.venta');
     Route::post('/factura/generar/{idFactura}', [FacturaController::class, 'generarFactura'])->name('factura.generar');
 
     Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedores.index');
     Route::get('/proveedores/create', [ProveedorController::class, 'create'])->name('proveedores.create');
     Route::post('/proveedores/store', [ProveedorController::class, 'store'])->name('proveedores.store');
-
+    Route::get('/proveedores', [ProveedorController::class, 'index'])->name('proveedores.index');
+    Route::get('/proveedores/edit/{idProveedor}', [ProveedorController::class, 'edit'])->name('proveedores.edit');
+    Route::put('/proveedores/update/{idProveedor}', [ProveedorController::class, 'update'])->name('proveedores.update');
     Route::delete('/proveedores/delete/{idProveedor}', [ProveedorController::class, 'destroy'])->name('proveedores.destroy');
 });
