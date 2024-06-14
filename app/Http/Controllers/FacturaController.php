@@ -10,8 +10,22 @@ use Illuminate\Support\Facades\DB;
 
 class FacturaController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        if($request->metodoBusqueda == 'fecha') {
+            $facturas = Factura::where('fecha', $request->parametro)->paginate(5);
+            $facturas->appends(['metodoBusqueda' => $request->metodoBusqueda]);
+            $facturas->appends(['parametro' => $request->parametro]);
+            return view('ventas', compact('facturas'));
+        }
+
+        if($request->metodoBusqueda == 'cliente') {
+            $clientesIds = Cliente::where('dni', 'like', '%'.$request->parametro.'%')->pluck('id');
+            $facturas = Factura::whereIn('cliente_id', $clientesIds)->paginate(1);
+            $facturas->appends(['metodoBusqueda' => $request->metodoBusqueda]);
+            $facturas->appends(['parametro' => $request->parametro]);
+            return view('ventas', compact('facturas'));
+        }
         $facturas = Factura::paginate(5);
         return view('ventas', compact('facturas'));
     }

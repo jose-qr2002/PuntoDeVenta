@@ -10,7 +10,12 @@ use Illuminate\Support\Facades\DB;
 
 class ProductoController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
+        if($request->parametro) {
+            $productos = Producto::where('codigo', 'like', '%'.$request->parametro.'%')->paginate(10);
+            $productos->appends(['parametro' => $request->parametro]);
+            return view('productos', compact('productos'));
+        }
         $productos = Producto::paginate(10);
         return view('productos', compact('productos'));
     }
