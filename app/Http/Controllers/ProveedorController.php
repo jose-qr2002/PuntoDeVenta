@@ -10,7 +10,7 @@ use Illuminate\Support\Facades\DB;
 class ProveedorController extends Controller
 {
     public function index() {
-        $proveedores = Proveedor::all();
+        $proveedores = Proveedor::paginate(8);
         return view('proveedores.index', compact('proveedores'));
     }
 
