@@ -12,7 +12,7 @@ class FacturaController extends Controller
 {
     public function index()
     {
-        $facturas = Factura::all();
+        $facturas = Factura::paginate(5);
         return view('ventas', compact('facturas'));
     }
 
