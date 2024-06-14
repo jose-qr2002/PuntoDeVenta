@@ -9,7 +9,12 @@ use Illuminate\Support\Facades\DB;
 
 class ProveedorController extends Controller
 {
-    public function index() {
+    public function index(Request $request) {
+        if($request->parametro) {
+            $proveedores = Proveedor::where('ruc', 'like', '%'.$request->parametro.'%')->paginate(8);
+            $proveedores->appends(['parametro' => $request->parametro]);
+            return view('proveedores.index', compact('proveedores'));
+        }
         $proveedores = Proveedor::paginate(8);
         return view('proveedores.index', compact('proveedores'));
     }

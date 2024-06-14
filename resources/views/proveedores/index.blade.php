@@ -12,12 +12,14 @@
         <a href="{{ route('proveedores.create') }}" class="btn btn-primary d-block">
             Registrar Proveedor
         </a>
-        <div class="input-group mb-3 mb-md-0 w-auto">
-            <input type="text" class="form-control" placeholder="RUC de Proveedor">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button">Buscar</button>
+        <form action="{{ route('proveedores.index') }}" method="GET">
+            <div class="input-group mb-3 mb-md-0 w-auto">
+                <input type="text" name="parametro" class="form-control" placeholder="Ruc del Proveedor" value="{{ request()->input('parametro') }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                </div>
             </div>
-        </div>
+        </form>
     </div>
     <div class="table-responsive mt-3 animate__animated animate__fadeInRight">
         <table class="table table-striped table-bordered text-center">
