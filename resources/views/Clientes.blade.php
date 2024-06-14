@@ -9,12 +9,14 @@
 @section('contenidoprincipal')
     <h1 class="text-center mt-5 animate__animated animate__fadeInRight">TODOS LOS CLIENTES</h1>
     <div class="controls d-flex flex-column flex-md-row justify-content-between align-items-center animate__animated animate__fadeInRight">
-        <div class="input-group mb-3 mb-md-0 w-auto">
-            <input type="text" class="form-control" placeholder="DNI del Cliente">
-            <div class="input-group-append">
-                <button class="btn btn-outline-secondary" type="button">Buscar</button>
+        <form action="{{ route('clientes.index') }}" method="GET">
+            <div class="input-group mb-3 mb-md-0 w-auto">
+                <input type="text" name="parametro" class="form-control" placeholder="DNI del Cliente" value="{{ request()->input('parametro') }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                </div>
             </div>
-        </div>
+        </form>
         <a href="{{ route('clientes.create') }}" class="mt-3 mt-md-0">
             <button class="btn btn-primary">Registrar Cliente</button>
         </a>

@@ -9,10 +9,16 @@ use Illuminate\Support\Facades\DB;
 
 class ClienteController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
-    $clientes = Cliente::paginate(10);
-    return view('Clientes', compact('clientes'));
+        // Busqueda alumno
+        if($request->parametro) {
+            $clientes = Cliente::where('dni', 'like', '%'.$request->parametro.'%')->paginate(10);
+            $clientes->appends(['parametro' => $request->parametro]);
+            return view('Clientes', compact('clientes'));
+        }
+        $clientes = Cliente::paginate(10);
+        return view('Clientes', compact('clientes'));
     }
 
     public function create() {
