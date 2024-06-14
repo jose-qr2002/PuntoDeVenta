@@ -11,7 +11,6 @@ class ClienteController extends Controller
 {
     public function index(Request $request)
     {
-        // Busqueda alumno
         if($request->parametro) {
             $clientes = Cliente::where('dni', 'like', '%'.$request->parametro.'%')->paginate(10);
             $clientes->appends(['parametro' => $request->parametro]);

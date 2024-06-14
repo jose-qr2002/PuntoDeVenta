@@ -12,10 +12,14 @@
         <a href="{{ route('productos.create') }}" class="btn btn-primary d-block">
             AGREGAR PRODUCTO
         </a>
-        <div class="d-flex flex-column flex-lg-row align-items-lg-center gap-2">
-            <input type="text" class="form-control" placeholder="Buscar Producto">
-            <button class="btn btn-outline-secondary w-100" type="button">Buscar</button>
-        </div>
+        <form action="{{ route('productos.index') }}" method="GET">
+            <div class="input-group mb-3 mb-md-0 w-auto">
+                <input type="text" name="parametro" class="form-control" placeholder="Codigo del Producto" value="{{ request()->input('parametro') }}">
+                <div class="input-group-append">
+                    <button class="btn btn-outline-secondary" type="submit">Buscar</button>
+                </div>
+            </div>
+        </form>
     </div>
     <div class="table-responsive animate__animated animate__fadeInRight">
         <table class="table mt-3 table-striped table-bordered text-center" style="min-width: 700px">
