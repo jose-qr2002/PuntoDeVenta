@@ -56,15 +56,7 @@
     </div>
     <!-- Pagination icons -->
     <div class="animate__animated animate__fadeInRight">
-        <nav aria-label="Page navigation example" class="d-flex justify-content-end">
-            <ul class="pagination">
-            <li class="page-item"><a class="page-link" href="#">Previous</a></li>
-            <li class="page-item"><a class="page-link" href="#">1</a></li>
-            <li class="page-item"><a class="page-link" href="#">2</a></li>
-            <li class="page-item"><a class="page-link" href="#">3</a></li>
-            <li class="page-item"><a class="page-link" href="#">Next</a></li>
-            </ul>
-        </nav>
+        {{ $productos->links() }}
     </div>
 
     @if(session('error'))
